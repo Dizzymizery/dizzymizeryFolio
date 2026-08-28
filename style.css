@@ -605,7 +605,7 @@ body {
    SHOP SECTION
    ========================================================================== */
 .shop-box {
-  padding: 4.5rem 2rem;
+  padding: 4rem 1.5rem;
   text-align: center;
   background: radial-gradient(circle at center, #191919 0%, #0d0d0d 100%);
 }
@@ -618,9 +618,12 @@ body {
 }
 
 .shop-title {
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  /* スマホの最小幅でも見切れないように 1.8rem スタートに調整 */
+  font-size: clamp(1.8rem, 7vw, 4.5rem);
   font-weight: 800;
   margin-bottom: 1rem;
+  word-break: break-word; /* 万が一の突き抜け防止 */
+  letter-spacing: 0.02em;
 }
 
 .shop-desc {
@@ -645,6 +648,7 @@ body {
   letter-spacing: 0.2em;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 100%; /* ボタンのはみ出し防止 */
 }
 
 .shop-booth-btn:hover {
@@ -653,7 +657,6 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
-
 /* ==========================================================================
    CONTACT SECTION
    ========================================================================== */
@@ -1431,5 +1434,15 @@ body.inverted-mode .filter-btn.active {
   .gallery-3col-grid {
     grid-template-columns: 1fr;
     gap: 1.2rem;
+  }
+  
+  .shop-box {
+    padding: 3rem 1rem;
+  }
+
+  .shop-booth-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
   }
 }
