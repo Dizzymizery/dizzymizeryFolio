@@ -602,14 +602,14 @@ body {
 }
 
 /* ==========================================================================
-   CONTACT SECTION
+   CONTACT SECTION (SNSボタン仕様)
    ========================================================================== */
 .contact-section {
   padding-bottom: 5rem;
 }
 
 .contact-box {
-  padding: 4rem 1.5rem;
+  padding: 4.5rem 2rem;
   text-align: center;
   background: radial-gradient(circle at center, #1c1c1c 0%, #0d0d0d 100%);
 }
@@ -624,50 +624,64 @@ body {
 .contact-huge {
   font-size: clamp(1.8rem, 5vw, 4rem);
   font-weight: 800;
-  margin: 1.2rem 0 2rem 0;
+  margin: 1.2rem 0 2.5rem 0;
 }
 
-.contact-actions {
+.contact-sns-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.copy-btn {
-  position: relative;
-  background: transparent;
+.sns-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #111111;
   border: 1px solid var(--border-bright);
-  color: #fff;
-  padding: 1rem 2.2rem;
+  color: #ffffff;
+  padding: 1.1rem 2.5rem;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.2s, background 0.3s, color 0.3s;
-  max-width: 100%;
-}
-
-.copy-btn:hover {
-  background: #fff;
-  color: #000;
-  transform: translateY(-2px);
-}
-
-.copy-toast {
-  font-size: 0.75rem;
-  color: var(--text-muted);
   letter-spacing: 0.15em;
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 0.3s, transform 0.3s;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
-.copy-toast.show {
-  opacity: 1;
-  transform: translateY(0);
+.sns-icon {
+  font-size: 1.1rem;
+}
+
+.sns-arrow {
+  font-size: 0.9rem;
+  transition: transform 0.25s ease;
+}
+
+.sns-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+}
+
+.sns-btn:hover .sns-arrow {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 600px) {
+  .contact-sns-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .sns-btn {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 /* ==========================================================================
