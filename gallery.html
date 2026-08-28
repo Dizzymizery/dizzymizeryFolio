@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VISUAL ARCHIVE // GALLERY | DizMiz</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-base detail-page">
+
+  <div class="page-transition-curtain" id="pageCurtain">
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+  </div>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <header class="site-header">
+    <a href="index.html" class="logo-group-link transition-link">
+      <span class="logo-symbol">◈</span>
+      <span class="logo-text">DizMiz</span>
+    </a>
+    <div class="status-indicator">
+      <span class="status-text">INDEX: 3-COL Z-MATRIX</span>
+    </div>
+  </header>
+
+  <main class="container gallery-container">
+    
+    <section class="gallery-hero">
+      <div class="detail-meta-top">
+        <span class="meta-tag">[ MONOLITH ARCHIVE ]</span>
+        <span class="meta-text">PURE VISUAL SPECIMENS // 3-COLUMN Z-ORDER</span>
+      </div>
+      <h1 class="gallery-title metallic-text">GALLERY</h1>
+      <p class="gallery-lead">
+        制作してきたグラフィック、ロゴ、イラストレーション、3D/HUDインターフェースの全ビジュアル・インデックス。
+      </p>
+
+      <div class="gallery-filter-bar">
+        <button class="filter-btn active" data-filter="all">ALL WORKS</button>
+        <button class="filter-btn" data-filter="logo">LOGO</button>
+        <button class="filter-btn" data-filter="illust">ILLUST</button>
+        <button class="filter-btn" data-filter="graphic">GRAPHIC</button>
+        <button class="filter-btn" data-filter="other">3D & HUD</button>
+      </div>
+    </section>
+
+    <section class="gallery-3col-grid">
+
+      <a href="work-logo.html#specimen-01" class="gallery-block metallic-border transition-link" data-cat="logo">
+        <div class="block-visual chrome-gradient-1"><span class="visual-symbol">◈</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">LOGO / 2026</span>
+            <h3 class="block-name">OVSIDIA EMBLEM</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-illustration.html#specimen-01" class="gallery-block metallic-border transition-link" data-cat="illust">
+        <div class="block-visual chrome-gradient-2"><span class="visual-symbol">❖</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">ILLUSTRATION / 2026</span>
+            <h3 class="block-name">MONOCHROME APPARITION</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-graphic.html#specimen-01" class="gallery-block metallic-border transition-link" data-cat="graphic">
+        <div class="block-visual chrome-gradient-3"><span class="visual-symbol">▲</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">GRAPHIC / 2025</span>
+            <h3 class="block-name">MONOLITH TYPE</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-other.html#specimen-01" class="gallery-block metallic-border transition-link" data-cat="other">
+        <div class="block-visual chrome-gradient-1"><span class="visual-symbol">⬢</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">3D & HUD / 2026</span>
+            <h3 class="block-name">SPECTRAZE HUD</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-logo.html#specimen-02" class="gallery-block metallic-border transition-link" data-cat="logo">
+        <div class="block-visual chrome-gradient-2"><span class="visual-symbol">⬡</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">LOGO / 2025</span>
+            <h3 class="block-name">NEXUS CYBERNETICS</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-illustration.html#specimen-02" class="gallery-block metallic-border transition-link" data-cat="illust">
+        <div class="block-visual chrome-gradient-3"><span class="visual-symbol">✦</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">ILLUSTRATION / 2025</span>
+            <h3 class="block-name">OBSIDIAN VALKYRIE</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-graphic.html#specimen-02" class="gallery-block metallic-border transition-link" data-cat="graphic">
+        <div class="block-visual chrome-gradient-1"><span class="visual-symbol">▼</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">GRAPHIC / 2025</span>
+            <h3 class="block-name">BRUTALIST GRID POSTER</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work-other.html#specimen-02" class="gallery-block metallic-border transition-link" data-cat="other">
+        <div class="block-visual chrome-gradient-2"><span class="visual-symbol">◈</span></div>
+        <div class="block-overlay">
+          <div class="overlay-inner">
+            <span class="block-cat">3D ART / 2025</span>
+            <h3 class="block-name">CHROME RELIC 3D</h3>
+            <span class="block-view">VIEW PROJECT ↗</span>
+          </div>
+        </div>
+      </a>
+
+    </section>
+
+    <section class="other-works-nav">
+      <div class="nav-cards-grid single-nav">
+        <a href="index.html" class="nav-work-card metallic-border transition-link">
+          <div class="nav-card-info">
+            <span class="nav-dir">RETURN TO INDEX</span>
+            <h3 class="nav-title">BACK TO HOME</h3>
+            <span class="nav-cat">ABOUT, SKILLS, SHOP & CONTACT →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 DizMiz. ALL RIGHTS RESERVED.</span>
+      <span class="footer-sys status-clickable" id="systemStatusTrigger">SYSTEM STATUS: NOMINAL</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

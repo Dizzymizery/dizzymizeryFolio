@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     2. 幾何学・ドットのインタラクティブ背景キャンバス
+     2. 幾何学・ドットのインタラクティブ背景キャンバス (反転カラー対応)
      ========================================================================== */
   const canvas = document.getElementById('bgCanvas');
   if (canvas) {
@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       draw() {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        const isInverted = document.body.classList.contains('inverted-mode');
+        ctx.fillStyle = isInverted ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.25)';
+        ctx.strokeStyle = isInverted ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.25)';
         ctx.lineWidth = 1;
 
         if (this.type === 0) {
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.moveTo(this.x - len, this.y);
           ctx.lineTo(this.x + len, this.y);
           ctx.moveTo(this.x, this.y - len);
-          ctx.lineTo(this.x + len, this.y);
+          ctx.lineTo(this.x, this.y + len);
           ctx.stroke();
         } else {
           ctx.beginPath();
@@ -175,28 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     4. Contactメールアドレス コピー機能
-     ========================================================================== */
-  const copyBtn = document.getElementById('copyEmailBtn');
-  const copyToast = document.getElementById('copyToast');
-
-  if (copyBtn) {
-    copyBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const email = copyBtn.getAttribute('data-email');
-      navigator.clipboard.writeText(email).then(() => {
-        copyToast.classList.add('show');
-        setTimeout(() => {
-          copyToast.classList.remove('show');
-        }, 2500);
-      }).catch(err => {
-        console.error('Clipboard copy failed:', err);
-      });
-    });
-  }
-
-  /* ==========================================================================
-     5. 幾何学ページトランジション & 同ページ内HUD演出
+     4. 幾何学ページトランジション & 同ページ内HUD演出
      ========================================================================== */
   const curtain = document.getElementById('pageCurtain');
   const transitionLinks = document.querySelectorAll('.transition-link, .logo-group-link');
@@ -241,6 +221,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  /* ==========================================================================
+     5. GALLERY リアルタイムフィルター切り替え (3列対応)
+     ========================================================================== */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryBlocks = document.querySelectorAll('.gallery-block');
+
+  if (filterBtns.length > 0 && galleryBlocks.length > 0) {
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const targetFilter = btn.getAttribute('data-filter');
+
+        galleryBlocks.forEach(block => {
+          const blockCat = block.getAttribute('data-cat');
+          if (targetFilter === 'all' || blockCat === targetFilter) {
+            block.classList.remove('hide');
+          } else {
+            block.classList.add('hide');
+          }
+        });
+      });
+    });
+  }
 
   /* ==========================================================================
      6. クリック / タップ波紋ショックウェーブ
@@ -314,11 +320,16 @@ document.addEventListener('DOMContentLoaded', () => {
           btnBox.className = 'terminal-actions';
           btnBox.id = 'mobileEasterBtns';
           btnBox.innerHTML = `
+            <button type="button" class="term-action-btn" id="toggleInvertBtn">> TOGGLE INVERT</button>
             <button type="button" class="term-action-btn" id="toggleOverdriveBtn">> TOGGLE OVERDRIVE</button>
             <button type="button" class="term-action-btn" id="toggleGlitchBtn">> TOGGLE GLITCH</button>
           `;
           secretTerminal.querySelector('.terminal-body').appendChild(btnBox);
 
+          document.getElementById('toggleInvertBtn').addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            document.body.classList.toggle('inverted-mode');
+          });
           document.getElementById('toggleOverdriveBtn').addEventListener('click', (ev) => {
             ev.stopPropagation();
             document.body.classList.toggle('overdrive-mode');
@@ -357,6 +368,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('glitch-mode');
         typedBuffer = '';
       }
+    }
+  });
+
+  /* ==========================================================================
+     10. 隠し要素④：キーボード「I」で ANTI-COLOR INVERSION (ネガポジ反転)
+     ========================================================================== */
+  window.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'i' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      document.body.classList.toggle('inverted-mode');
     }
   });
 
