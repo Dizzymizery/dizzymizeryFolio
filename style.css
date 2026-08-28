@@ -151,9 +151,9 @@ body {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(8, 8, 8, 0.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(8, 8, 8, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo-group-link {
@@ -219,7 +219,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 6rem;
+  padding-top: 7rem;
   position: relative;
   border-bottom: 1px solid var(--border-dim);
 }
@@ -605,7 +605,7 @@ body {
    SHOP SECTION
    ========================================================================== */
 .shop-box {
-  padding: 4rem 1.5rem;
+  padding: 4.5rem 2rem;
   text-align: center;
   background: radial-gradient(circle at center, #191919 0%, #0d0d0d 100%);
 }
@@ -618,11 +618,10 @@ body {
 }
 
 .shop-title {
-  /* スマホの最小幅でも見切れないように 1.8rem スタートに調整 */
   font-size: clamp(1.8rem, 7vw, 4.5rem);
   font-weight: 800;
   margin-bottom: 1rem;
-  word-break: break-word; /* 万が一の突き抜け防止 */
+  word-break: break-word;
   letter-spacing: 0.02em;
 }
 
@@ -648,7 +647,7 @@ body {
   letter-spacing: 0.2em;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  max-width: 100%; /* ボタンのはみ出し防止 */
+  max-width: 100%;
 }
 
 .shop-booth-btn:hover {
@@ -657,6 +656,7 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
+
 /* ==========================================================================
    CONTACT SECTION
    ========================================================================== */
@@ -740,37 +740,64 @@ body {
 }
 
 /* ==========================================================================
-   GALLERY PAGE (3列・Z順グリッド)
+   DETAIL & GALLERY COMMON LAYOUT (★見切れ修正・上部余白最適化★)
    ========================================================================== */
+.detail-container,
 .gallery-container {
-  padding-top: 7rem;
+  padding-top: 9rem; /* 固定ヘッダーとの重なりを完全回避 */
 }
 
-.gallery-hero {
+.detail-hero,
+.gallery-hero,
+.detail-page-header {
+  margin-top: 1rem;
   margin-bottom: 3.5rem;
 }
 
-.gallery-title {
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 1.2rem;
+.detail-page-header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-dim);
 }
 
+.detail-meta-top {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.detail-title,
+.gallery-title,
+.detail-category-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.8rem); /* 巨大化を抑えて美しくフィット */
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+  word-break: break-word;
+}
+
+.detail-lead,
 .gallery-lead {
-  max-width: 650px;
+  max-width: 720px;
   font-size: 1rem;
   line-height: 1.8;
   color: var(--text-muted);
-  margin-bottom: 2.5rem;
 }
 
+/* ==========================================================================
+   GALLERY PAGE (3列・Z順グリッド)
+   ========================================================================== */
 .gallery-filter-bar {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
   border-bottom: 1px solid var(--border-dim);
   padding-bottom: 1.5rem;
+  margin-top: 2rem;
 }
 
 .filter-btn {
@@ -797,6 +824,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.8rem;
   margin-bottom: 6rem;
+  margin-top: 2rem;
 }
 
 .gallery-block {
@@ -880,19 +908,6 @@ body {
 /* ==========================================================================
    TIMELINE DETAIL PAGES (5連タイムライン)
    ========================================================================== */
-.detail-page-header {
-  margin-bottom: 4rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-dim);
-}
-
-.detail-category-title {
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 1.2rem;
-}
-
 .work-timeline-list {
   display: flex;
   flex-direction: column;
@@ -931,7 +946,7 @@ body {
 }
 
 .work-entry-title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
@@ -1104,6 +1119,7 @@ body {
 .about-id-large {
   padding: 2.5rem 2rem;
   background: radial-gradient(circle at 10% 20%, #1c1c1c 0%, #0c0c0c 100%);
+  margin-bottom: 3.5rem;
 }
 
 .id-inner-grid {
@@ -1384,12 +1400,17 @@ body.inverted-mode .filter-btn.active {
 }
 
 /* ==========================================================================
-   RESPONSIVE MEDIA QUERIES
+   RESPONSIVE MEDIA QUERIES (スマホ・タブレット最適化)
    ========================================================================== */
 @media (max-width: 900px) {
   .site-header { padding: 1rem 1.2rem; }
   .container { padding: 0 1.2rem; }
   .nav-links { display: none; }
+
+  .detail-container,
+  .gallery-container {
+    padding-top: 7rem;
+  }
 
   .about-grid, 
   .skills-grid, 
