@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DizMiz (DizzyMizary) | Graphic Designer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-base">
+
+  <div class="page-transition-curtain" id="pageCurtain">
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+  </div>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <header class="site-header">
+    <a href="index.html" class="logo-group-link transition-link">
+      <span class="logo-symbol">◈</span>
+      <span class="logo-text">DizMiz</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about" class="nav-item">ABOUT</a>
+      <a href="#works" class="nav-item">WORKS</a>
+      <a href="#skills" class="nav-item">SKILLS</a>
+      <a href="#contact" class="nav-item">CONTACT</a>
+    </nav>
+    <div class="status-indicator">
+      <span class="blink-dot"></span>
+      <span class="status-text">AVAILABLE FOR WORK</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero-section" id="hero">
+      <div class="hero-meta">
+        <span class="meta-tag">[ IDENTITY ]</span>
+        <span class="meta-text">GRAPHIC / UI / LOGO / 3D DESIGN</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="hero-sub">GRAPHIC DESIGNER</span>
+        <span class="metallic-text" data-text="DizMiz">DizMiz</span>
+      </h1>
+
+      <div class="hero-foot">
+        <p class="hero-desc">
+          冷徹な構造美と、質感の衝動。<br>
+          幾何学的グリッドの緻密さと、境界を越境するビジュアル表現を構築する。
+        </p>
+        <div class="scroll-prompt">
+          <span class="scroll-arrow">↓</span>
+          <span>EXPLORE ARCHIVE</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="content-section focusable-section">
+      <div class="section-label">
+        <span class="section-num">01</span>
+        <h2 class="section-title">ABOUT</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="about-grid">
+        <a href="about-detail.html" class="about-hero-box metallic-border transition-link tilt-card" title="Click to view full dossier">
+          <div class="corner-accents"></div>
+          <div class="about-profile-info">
+            <span class="spec-label">CODENAME</span>
+            <h3 class="profile-name">DizMiz</h3>
+            <span class="spec-label mt">FULLNAME</span>
+            <p class="profile-fullname">DizzyMizary</p>
+            <span class="view-dossier-tag">VIEW DOSSIER ↗</span>
+          </div>
+          <div class="interactive-hologram" id="holoCard">
+            <div class="holo-core">◈</div>
+            <div class="holo-ring"></div>
+            <div class="holo-grid"></div>
+          </div>
+        </a>
+
+        <div class="about-text-box">
+          <h3 class="metallic-text-sm">LOGICAL STRUCTURE & BRUTAL PRESENCE</h3>
+          <p>
+            ロゴデザイン、ゲームUI、タイポグラフィ、3Dグラフィックを軸に活動するグラフィックデザイナー。
+          </p>
+          <p class="mt-sm">
+            グリッドシステムに裏打ちされた論理的な情報設計をベースにしつつ、メタリックな質感、大胆なスケール比、鋭角的な造形を掛け合わせることで、無機質でありながら強烈な存在感を放つビジュアルを創出する。
+          </p>
+          <div class="metric-list">
+            <div class="metric-item">
+              <span class="metric-val">100%</span>
+              <span class="metric-key">MONOCHROME PURSUIT</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">PIXEL</span>
+              <span class="metric-key">PERFECT GRIDDING</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="works" class="content-section focusable-section">
+      <div class="section-label">
+        <span class="section-num">02</span>
+        <h2 class="section-title">SELECTED WORKS</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="works-grid">
+        <a href="work-logo.html" class="work-card large metallic-border tilt-card transition-link">
+          <div class="work-visual">
+            <div class="work-img-mock chrome-gradient-1">
+              <span class="visual-symbol">◈</span>
+            </div>
+            <span class="work-badge">KEY PROJECT / 01</span>
+          </div>
+          <div class="work-details">
+            <div class="work-meta">
+              <span class="work-cat">LOGO & IDENTITY</span>
+              <span class="work-year">2026</span>
+            </div>
+            <h3 class="work-title">OVSIDIA EMBLEM</h3>
+            <p class="work-desc">鋭角な幾何学グリッドと黄金比を融合させた、SF組織のシンボル体系・ブランドアイデンティティ設計。</p>
+          </div>
+        </a>
+
+        <a href="work-illustration.html" class="work-card metallic-border tilt-card transition-link">
+          <div class="work-visual">
+            <div class="work-img-mock chrome-gradient-2">
+              <span class="visual-symbol">❖</span>
+            </div>
+            <span class="work-badge">ILLUST / 02</span>
+          </div>
+          <div class="work-details">
+            <div class="work-meta">
+              <span class="work-cat">ILLUSTRATION & CHARACTER</span>
+              <span class="work-year">2026</span>
+            </div>
+            <h3 class="work-title">MONOCHROME APPARITION</h3>
+            <p class="work-desc">光と影の極限コントラストと鋭いエッジで描く、ソリッドなキャラクター・グラフィック。</p>
+          </div>
+        </a>
+
+        <a href="work-graphic.html" class="work-card metallic-border tilt-card transition-link">
+          <div class="work-visual">
+            <div class="work-img-mock chrome-gradient-3">
+              <span class="visual-symbol">▲</span>
+            </div>
+            <span class="work-badge">GRAPHIC / 03</span>
+          </div>
+          <div class="work-details">
+            <div class="work-meta">
+              <span class="work-cat">GRAPHIC & POSTER</span>
+              <span class="work-year">2025</span>
+            </div>
+            <h3 class="work-title">MONOLITH TYPOGRAPHY</h3>
+            <p class="work-desc">グリッドの解体と再構築を試みた実験的ポスター連作とディスプレイフォント設計。</p>
+          </div>
+        </a>
+
+        <a href="work-other.html" class="work-card large metallic-border tilt-card transition-link">
+          <div class="work-visual">
+            <div class="work-img-mock chrome-gradient-1">
+              <span class="visual-symbol">⬢</span>
+            </div>
+            <span class="work-badge">3D & HUD / 04</span>
+          </div>
+          <div class="work-details">
+            <div class="work-meta">
+              <span class="work-cat">3D ART & GAME HUD</span>
+              <span class="work-year">2026</span>
+            </div>
+            <h3 class="work-title">SPECTRAZE HUD INTERFACE</h3>
+            <p class="work-desc">ハードサーフェスモデリングと未来型ゲームUIレイアウトを融合させたインタラクティブ展示作品。</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="skills" class="content-section focusable-section">
+      <div class="section-label">
+        <span class="section-num">03</span>
+        <h2 class="section-title">SKILLS & DOMAIN</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-group metallic-border">
+          <h3 class="skill-cat-title">01 / GRAPHIC & UI</h3>
+          <ul class="skill-list">
+            <li><span>Logo & Identity Design</span><span class="skill-lvl">EXP</span></li>
+            <li><span>Game UI / HUD Layout</span><span class="skill-lvl">EXP</span></li>
+            <li><span>Editorial & Typography</span><span class="skill-lvl">EXP</span></li>
+            <li><span>Vector Geometry</span><span class="skill-lvl">EXP</span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group metallic-border">
+          <h3 class="skill-cat-title">02 / 3D & MOTION</h3>
+          <ul class="skill-list">
+            <li><span>Hard-Surface Modeling</span><span class="skill-lvl">MID</span></li>
+            <li><span>Chrome / Metallic Shading</span><span class="skill-lvl">EXP</span></li>
+            <li><span>Procedural Graphics</span><span class="skill-lvl">MID</span></li>
+            <li><span>Keyframe Animation</span><span class="skill-lvl">MID</span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group metallic-border">
+          <h3 class="skill-cat-title">03 / TOOLSET</h3>
+          <div class="tag-cloud">
+            <span class="tag">Photoshop</span>
+            <span class="tag">Illustrator</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Blender</span>
+            <span class="tag">After Effects</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="content-section contact-section focusable-section">
+      <div class="section-label">
+        <span class="section-num">04</span>
+        <h2 class="section-title">INITIATE CONTACT</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="contact-box metallic-border">
+        <div class="contact-inner">
+          <span class="contact-sub">COMMISSION / PROJECT / INQUIRY</span>
+          <h3 class="contact-huge metallic-text">LET'S BUILD THE MONOLITH.</h3>
+          
+          <div class="contact-actions">
+            <button class="copy-btn" id="copyEmailBtn" data-email="contact@dizmiz.design" type="button">
+              <span class="btn-text">COPY EMAIL ADDRESS</span>
+            </button>
+            <span class="copy-toast" id="copyToast">COPIED TO CLIPBOARD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 DizMiz. ALL RIGHTS RESERVED.</span>
+      <span class="footer-sys status-clickable" id="systemStatusTrigger">SYSTEM STATUS: NOMINAL</span>
+    </div>
+  </footer>
+
+  <div class="secret-terminal" id="secretTerminal">
+    <div class="terminal-bar">
+      <span>SYSTEM CONSOLE // ROOT OVERRIDE</span>
+      <button class="terminal-close" id="terminalClose" type="button">×</button>
+    </div>
+    <div class="terminal-body" id="terminalOutput">
+      <p>> INITIALIZING SYSTEM OVERRIDE PROTOCOL...</p>
+      <p>> CORE: DizMiz UI KERNEL v3.0.0</p>
+      <p>> STATUS: 100% MONOCHROME PURITY DETECTED.</p>
+      <p>> TIP 1: Konami Code [ ↑ ↑ ↓ ↓ ← → ← → B A ] -> Overdrive Mode.</p>
+      <p>> TIP 2: Type [ D I Z M I Z ] anywhere -> Glitch Matrix Mode.</p>
+      <p class="terminal-blink">> _</p>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

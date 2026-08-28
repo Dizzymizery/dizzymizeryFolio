@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROFILE & PHILOSOPHY | DizMiz</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-base detail-page">
+
+  <div class="page-transition-curtain" id="pageCurtain">
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+    <div class="curtain-slice"></div>
+  </div>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <header class="site-header">
+    <a href="index.html" class="logo-group-link transition-link">
+      <span class="logo-symbol">◈</span>
+      <span class="logo-text">DizMiz</span>
+    </a>
+    <div class="status-indicator">
+      <span class="status-text">PERSONNEL ID: #DM-00</span>
+    </div>
+  </header>
+
+  <main class="container detail-container">
+    
+    <section class="detail-hero">
+      <div class="detail-meta-top">
+        <span class="meta-tag">[ IDENTITY DOSSIER ]</span>
+        <span class="meta-text">GRAPHIC / UI / LOGO DESIGNER</span>
+      </div>
+      <h1 class="detail-title metallic-text">DizMiz</h1>
+      <p class="detail-lead">
+        フルネーム: DizzyMizary。<br>
+        冷徹なグリッド構造と、触覚的な質感表現の交差点でビジュアルを構築するグラフィックデザイナー。
+      </p>
+    </section>
+
+    <section class="detail-showcase-hero">
+      <div class="showcase-frame metallic-border about-id-large">
+        <div class="id-inner-grid">
+          <div class="id-symbol-large">◈</div>
+          <div class="id-info-block">
+            <span class="spec-label">DESIGNATION</span>
+            <div class="id-spec-title">GRAPHIC & GAME UI SPECIALIST</div>
+            <p class="id-spec-desc">
+              徹底したグリッドシステムと計算されたタイポグラフィ、無機質でありながら強烈なコントラストを放つビジュアル設計を追求。
+            </p>
+          </div>
+        </div>
+        <div class="frame-label">DOSSIER FILE: SPECIMEN #00 // VERIFIED</div>
+      </div>
+    </section>
+
+    <section class="detail-specs-grid">
+      <aside class="detail-sidebar metallic-border">
+        <h2 class="spec-section-title">PROFILE SPEC</h2>
+        
+        <div class="spec-row">
+          <span class="spec-key">ALIAS</span>
+          <span class="spec-val">DizMiz</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">FULL NAME</span>
+          <span class="spec-val">DizzyMizary</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">CORE DOMAIN</span>
+          <span class="spec-val">Game UI, Logo Identity, Typography, 3D Hard-Surface</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">STYLE MOTTO</span>
+          <span class="spec-val">Monochrome Purity, Chrome Texture, Strict Gridding</span>
+        </div>
+      </aside>
+
+      <article class="detail-body-content">
+        <div class="concept-block">
+          <h2 class="content-heading metallic-text-sm">01. DESIGN PHILOSOPHY</h2>
+          <p>
+            「色は極限まで削ぎ落とし、明度と質感で語る」<br>
+            余計な装飾や多色使いに頼らず、厳格なグリッドと鋭角的なタイポグラフィ、そして光の反射を伴うクロムの階調によって、画面そのものに圧倒的な説得力と緊張感を与える設計を大切にしています。
+          </p>
+        </div>
+
+        <div class="concept-block mt">
+          <h2 class="content-heading metallic-text-sm">02. CORE STRENGTHS</h2>
+          <p>
+            <strong>・論理と衝動の共存:</strong> 緻密な情報設計・UIレイアウトを行いながら、メインビジュアルやロゴではグリッドを突き破るような大胆なスケール感で魅せる構成力。<br>
+            <strong>・質感のコントロール:</strong> 2Dグラフィックにとどまらず、3Dツールを用いた金属シェーディングや光のハイライトを取り入れたマテリアル表現。
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="other-works-nav">
+      <div class="nav-cards-grid single-nav">
+        <a href="index.html" class="nav-work-card metallic-border transition-link">
+          <div class="nav-card-info">
+            <span class="nav-dir">RETURN TO INDEX</span>
+            <h3 class="nav-title">BACK TO HOME & WORKS</h3>
+            <span class="nav-cat">VIEW ALL ARCHIVED PROJECTS →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 DizMiz. ALL RIGHTS RESERVED.</span>
+      <span class="footer-sys status-clickable" id="systemStatusTrigger">SYSTEM STATUS: NOMINAL</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
