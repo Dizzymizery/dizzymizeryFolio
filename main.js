@@ -50,103 +50,170 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     2. 幾何学・ドットのインタラクティブ背景キャンバス (反転カラー対応)
+     2. モノクローム・クロムリキッド WebGL シェーダー背景
      ========================================================================== */
   const canvas = document.getElementById('bgCanvas');
   if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.size = Math.random() * 2 + 1;
-        this.baseX = this.x;
-        this.baseY = this.y;
-        this.density = (Math.random() * 20) + 1;
-        this.type = Math.floor(Math.random() * 3);
-      }
-
-      draw() {
-        const isInverted = document.body.classList.contains('inverted-mode');
-        ctx.fillStyle = isInverted ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.25)';
-        ctx.strokeStyle = isInverted ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.25)';
-        ctx.lineWidth = 1;
-
-        if (this.type === 0) {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (this.type === 1) {
-          const len = 4;
-          ctx.beginPath();
-          ctx.moveTo(this.x - len, this.y);
-          ctx.lineTo(this.x + len, this.y);
-          ctx.moveTo(this.x, this.y - len);
-          ctx.lineTo(this.x, this.y + len);
-          ctx.stroke();
-        } else {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
-          ctx.stroke();
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (gl) {
+      const vsSource = `
+        attribute vec2 a_position;
+        void main() {
+          gl_Position = vec4(a_position, 0.0, 1.0);
         }
-      }
+      `;
 
-      update() {
-        let dx = mouseX - this.x;
-        let dy = mouseY - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let maxDistance = 100;
+      const fsSource = `
+        precision highp float;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform vec2 u_mouse;
+        uniform float u_inverted;
 
-        if (distance < maxDistance) {
-          let forceDirectionX = dx / distance;
-          let forceDirectionY = dy / distance;
-          let force = (maxDistance - distance) / maxDistance;
-          let directionX = forceDirectionX * force * this.density;
-          let directionY = forceDirectionY * force * this.density;
-          this.x -= directionX;
-          this.y -= directionY;
-        } else {
-          if (this.x !== this.baseX) {
-            let dx = this.x - this.baseX;
-            this.x -= dx * 0.05;
-          }
-          if (this.y !== this.baseY) {
-            let dy = this.y - this.baseY;
-            this.y -= dy * 0.05;
-          }
+        vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+        float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                            -0.577350269189626, 0.024390243902439);
+          vec2 i  = floor(v + dot(v, C.yy) );
+          vec2 x0 = v -   i + dot(i, C.xx);
+          vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod289(i);
+          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+                + i.x + vec3(0.0, i1.x, 1.0 ));
+          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+          m = m*m ;
+          m = m*m ;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+          vec3 g;
+          g.x  = a0.x  * x0.x  + h.x  * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
         }
-      }
-    }
 
-    function initParticles() {
-      particles = [];
-      const count = Math.floor((width * height) / 20000);
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-      }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
+        float fbm(vec2 p) {
+          float v = 0.0;
+          float a = 0.5;
+          vec2 shift = vec2(100.0);
+          mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+          for (int i = 0; i < 4; ++i) {
+            v += a * snoise(p);
+            p = rot * p * 2.0 + shift;
+            a *= 0.5;
+          }
+          return v;
+        }
 
-    function animateCanvas() {
-      ctx.clearRect(0, 0, width, height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].draw();
-        particles[i].update();
+        void main() {
+          vec2 st = gl_FragCoord.xy / u_resolution.xy;
+          st.x *= u_resolution.x / u_resolution.y;
+
+          vec2 m = u_mouse / u_resolution.xy;
+          m.x *= u_resolution.x / u_resolution.y;
+          
+          float distToMouse = length(st - m);
+          float mouseFactor = smoothstep(0.6, 0.0, distToMouse);
+
+          vec2 q = vec2(0.0);
+          q.x = fbm(st + 0.04 * u_time);
+          q.y = fbm(st + vec2(1.0));
+
+          vec2 r = vec2(0.0);
+          r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time + mouseFactor * 0.4);
+          r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time - mouseFactor * 0.3);
+
+          float f = fbm(st + r);
+
+          float chrome = smoothstep(-0.2, 0.9, f);
+          chrome = pow(chrome, 2.2);
+
+          float edge = smoothstep(0.4, 0.45, f) - smoothstep(0.45, 0.65, f);
+          vec3 col = mix(vec3(0.03), vec3(0.95), chrome);
+          col += vec3(edge * 0.4);
+
+          if (u_inverted > 0.5) {
+            col = 1.0 - col;
+          }
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        return shader;
       }
-      requestAnimationFrame(animateCanvas);
+
+      const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+
+      const positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,  1, -1, -1,  1,
+        -1,  1,  1, -1,  1,  1,
+      ]), gl.STATIC_DRAW);
+
+      const positionLoc = gl.getAttribLocation(program, 'a_position');
+      const resolutionLoc = gl.getUniformLocation(program, 'u_resolution');
+      const timeLoc = gl.getUniformLocation(program, 'u_time');
+      const mouseLoc = gl.getUniformLocation(program, 'u_mouse');
+      const invertedLoc = gl.getUniformLocation(program, 'u_inverted');
+
+      let targetMouseX = window.innerWidth / 2;
+      let targetMouseY = window.innerHeight / 2;
+      let currentMouseX = targetMouseX;
+      let currentMouseY = targetMouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        targetMouseX = e.clientX;
+        targetMouseY = window.innerHeight - e.clientY;
+      });
+
+      function resize() {
+        canvas.width = window.innerWidth * 0.5;
+        canvas.height = window.innerHeight * 0.5;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      let startTime = performance.now();
+
+      function render() {
+        currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(positionLoc);
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+        const currentTime = (performance.now() - startTime) * 0.001;
+        gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+        gl.uniform1f(timeLoc, currentTime);
+        gl.uniform2f(mouseLoc, currentMouseX * 0.5, currentMouseY * 0.5);
+        gl.uniform1f(invertedLoc, document.body.classList.contains('inverted-mode') ? 1.0 : 0.0);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+      }
+      render();
     }
-    animateCanvas();
   }
 
   /* ==========================================================================
