@@ -39,7 +39,7 @@ body {
 }
 
 /* ==========================================================================
-   BACKGROUND & CANVAS
+   BACKGROUND & CANVAS (リキッドシェーダー表示設定)
    ========================================================================== */
 #bgCanvas {
   position: fixed;
@@ -49,7 +49,14 @@ body {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.45;
+  filter: contrast(130%) brightness(80%);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+body.inverted-mode #bgCanvas {
+  opacity: 0.55;
+  filter: contrast(120%) brightness(100%);
 }
 
 /* ==========================================================================
@@ -435,7 +442,7 @@ body {
 }
 
 /* ==========================================================================
-   WORKS SECTION
+   WORKS SECTION & ACTUAL IMAGES
    ========================================================================== */
 .works-grid {
   display: grid;
@@ -477,34 +484,48 @@ body {
   width: 100%;
 }
 
-.work-img-mock {
+.work-actual-img,
+.gallery-actual-img {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: cover;
+  display: block;
+  background-color: #111111;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.work-card:hover .work-img-mock {
-  transform: scale(1.05);
+.work-card:hover .work-actual-img,
+.gallery-block:hover .gallery-actual-img {
+  transform: scale(1.06);
 }
 
-.visual-symbol {
-  font-size: 3rem;
-  color: #fff;
-  opacity: 0.7;
-  transition: transform 0.4s ease;
+.detail-actual-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background-color: #111111;
 }
 
-.work-card:hover .visual-symbol {
-  transform: scale(1.15) rotate(5deg);
-  opacity: 1;
+/* 画像ファイルが未配置時のフォールバック表示 */
+img.img-fallback {
+  background: radial-gradient(circle at center, #262626 0%, #0d0d0d 100%) !important;
+  position: relative;
 }
 
-.chrome-gradient-1 { background: radial-gradient(circle at 30% 30%, #ffffff 0%, #333333 40%, #000000 80%); }
-.chrome-gradient-2 { background: linear-gradient(135deg, #2b2b2b 0%, #888888 50%, #000000 100%); }
-.chrome-gradient-3 { background: radial-gradient(circle at 70% 70%, #666666 0%, #1c1c1c 60%, #000000 100%); }
+img.img-fallback::after {
+  content: "NO IMAGE DETECTED";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-dim);
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+}
 
 .work-badge {
   position: absolute;
@@ -515,6 +536,7 @@ body {
   font-size: 0.65rem;
   padding: 0.3rem 0.6rem;
   letter-spacing: 0.15em;
+  z-index: 2;
 }
 
 .work-details {
@@ -740,17 +762,17 @@ body {
 }
 
 /* ==========================================================================
-   DETAIL & GALLERY COMMON LAYOUT (★見切れ修正・上部余白最適化★)
+   DETAIL & GALLERY COMMON LAYOUT (★見切れ解消・上部余白150px固定★)
    ========================================================================== */
-.detail-container,
-.gallery-container {
-  padding-top: 9rem; /* 固定ヘッダーとの重なりを完全回避 */
+body.detail-page main.detail-container,
+body.detail-page main.gallery-container {
+  padding-top: 150px !important;
 }
 
 .detail-hero,
 .gallery-hero,
 .detail-page-header {
-  margin-top: 1rem;
+  margin-top: 1.5rem !important;
   margin-bottom: 3.5rem;
 }
 
@@ -765,7 +787,7 @@ body {
   font-size: 0.8rem;
   color: var(--text-dim);
   letter-spacing: 0.2em;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -773,9 +795,9 @@ body {
 .gallery-title,
 .detail-category-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 4.8rem); /* 巨大化を抑えて美しくフィット */
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   margin-bottom: 1.2rem;
   word-break: break-word;
 }
@@ -848,10 +870,6 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gallery-block:hover .block-visual {
-  transform: scale(1.08);
 }
 
 .block-overlay {
@@ -1008,16 +1026,6 @@ body {
   position: relative;
   background: #000;
   padding: 0.8rem;
-}
-
-.detail-hero-img {
-  aspect-ratio: 16 / 9;
-}
-
-.visual-symbol-lg {
-  font-size: 4.5rem;
-  color: #fff;
-  opacity: 0.8;
 }
 
 .frame-label {
@@ -1407,9 +1415,28 @@ body.inverted-mode .filter-btn.active {
   .container { padding: 0 1.2rem; }
   .nav-links { display: none; }
 
-  .detail-container,
-  .gallery-container {
-    padding-top: 7rem;
+  /* スマホ・タブレット時の詳細・ギャラリー上部余白 */
+  body.detail-page main.detail-container,
+  body.detail-page main.gallery-container {
+    padding-top: 110px !important;
+  }
+
+  /* HEROセクションのフッター縦並び最適化 */
+  .hero-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-desc {
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.9;
+  }
+
+  .scroll-prompt {
+    align-self: flex-start;
   }
 
   .about-grid, 
