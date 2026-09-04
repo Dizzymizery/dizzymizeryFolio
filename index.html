@@ -23,6 +23,7 @@
   <div class="cursor-ring" id="cursorRing"></div>
   <canvas id="bgCanvas"></canvas>
 
+  <!-- 磨りガラスヘッダー -->
   <header class="site-header">
     <a href="index.html" class="logo-group-link transition-link">
       <span class="logo-symbol">◈</span>
@@ -67,7 +68,7 @@
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- ABOUT SECTION (幾何学HUD ＆ 新プロフィール) -->
     <section id="about" class="content-section focusable-section">
       <div class="section-label">
         <span class="section-num">01</span>
@@ -76,38 +77,66 @@
       </div>
 
       <div class="about-grid">
-        <a href="about-detail.html" class="about-hero-box metallic-border transition-link tilt-card" title="Click to view full dossier">
-          <div class="corner-accents"></div>
-          <div class="about-profile-info">
-            <span class="spec-label">CODENAME</span>
-            <h3 class="profile-name">DizMiz</h3>
-            <span class="spec-label mt">FULLNAME</span>
-            <p class="profile-fullname">DizzyMizary</p>
-            <span class="view-dossier-tag">VIEW DOSSIER ↗</span>
+        <!-- 左: IDカードモジュール -->
+        <a href="about-detail.html" class="about-hero-box geo-panel transition-link tilt-card" title="Click to view full dossier">
+          <div class="about-card-top">
+            <div>
+              <span class="spec-label">DESIGNER ID // #DM-00</span>
+              <h3 class="profile-name">DizMiz</h3>
+              <span class="profile-origin-badge">KANSAI BRED</span>
+            </div>
+            <div class="interactive-hologram" id="holoCard">
+              <div class="holo-core">◈</div>
+            </div>
           </div>
-          <div class="interactive-hologram" id="holoCard">
-            <div class="holo-core">◈</div>
-            <div class="holo-ring"></div>
-            <div class="holo-grid"></div>
+
+          <div class="about-card-mid">
+            <span class="spec-label">TASTE & CULTURE MATRIX</span>
+            <div class="about-tag-strip" style="margin-top: 0.5rem;">
+              <span class="micro-chip">#HIPHOP_CULTURE</span>
+              <span class="micro-chip">#GAME_OBSESSED</span>
+              <span class="micro-chip">#CUTE_AESTHETICS</span>
+              <span class="micro-chip">#STREET_TO_MODERN</span>
+            </div>
+          </div>
+
+          <div class="view-dossier-tag">
+            <span>ACCESS FULL DOSSIER</span>
+            <span>↗</span>
           </div>
         </a>
 
-        <div class="about-text-box">
-          <h3 class="metallic-text-sm">LOGICAL STRUCTURE & BRUTAL PRESENCE</h3>
-          <p>
-            ロゴデザイン、ゲームUI、タイポグラフィ、3Dグラフィックを軸に活動するグラフィックデザイナー。
-          </p>
-          <p class="mt-sm">
-            グリッドシステムに裏打ちされた論理的な情報設計をベースにしつつ、メタリックな質感、大胆なスケール比、鋭角的な造形を掛け合わせることで、無機質でありながら強烈な存在感を放つビジュアルを創出する。
-          </p>
+        <!-- 右: 自己紹介テキスト＆HUDパラメーター -->
+        <div class="about-text-box geo-panel">
+          <div>
+            <div class="about-header-meta">MISSION // HYBRID VISUAL VECTOR</div>
+            <h3 class="metallic-text-sm" style="font-size: 1.25rem; margin-bottom: 1rem;">
+              BEYOND THE GRID — STYLES IN HARMONY
+            </h3>
+            <p>
+              ロゴ・グラフィック・イラストレーションを中心に活動するグラフィックデザイナー。
+            </p>
+            <p style="margin-top: 0.8rem;">
+              厳格で冷徹なモダンデザインから、ストリート感溢れるエッジの効いた造形、そしてポップでキャッチーなカートゥーン表現まで、文脈に応じた自在なスタイルシフトを得意とする関西人。
+            </p>
+            <p style="margin-top: 0.8rem;">
+              カルチャーの根底にはゲームとHiphopの衝動、そして「可愛いもの」への飽くなきフェティシズムが脈打っており、論理的なグリッド構造の中に生々しい熱量と遊び心を共存させたビジュアルを追求している。
+            </p>
+          </div>
+
+          <!-- フレーバー数値HUD -->
           <div class="metric-list">
             <div class="metric-item">
-              <span class="metric-val">100%</span>
-              <span class="metric-key">MONOCHROME PURSUIT</span>
+              <span class="metric-val">BPM 90s</span>
+              <span class="metric-key">HIPHOP GROOVE</span>
             </div>
             <div class="metric-item">
-              <span class="metric-val">PIXEL</span>
-              <span class="metric-key">PERFECT GRIDDING</span>
+              <span class="metric-val">100%</span>
+              <span class="metric-key">PASSION TO GAMES</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">HYBRID</span>
+              <span class="metric-key">CARTOON × STREET</span>
             </div>
           </div>
         </div>
@@ -124,7 +153,7 @@
 
       <div class="works-grid">
         <!-- Work 1: LOGO -->
-        <a href="work-logo.html" class="work-card large metallic-border tilt-card transition-link">
+        <a href="work-logo.html" class="work-card large geo-panel tilt-card transition-link">
           <div class="work-visual">
             <img src="images/logo_web1.png" alt="OVSIDIA EMBLEM" class="work-actual-img" onerror="this.classList.add('img-fallback')">
             <span class="work-badge">KEY PROJECT / 01</span>
@@ -140,7 +169,7 @@
         </a>
 
         <!-- Work 2: ILLUST -->
-        <a href="work-illustration.html" class="work-card metallic-border tilt-card transition-link">
+        <a href="work-illustration.html" class="work-card geo-panel tilt-card transition-link">
           <div class="work-visual">
             <img src="images/illust_web1.png" alt="MONOCHROME APPARITION" class="work-actual-img" onerror="this.classList.add('img-fallback')">
             <span class="work-badge">ILLUST / 02</span>
@@ -156,7 +185,7 @@
         </a>
 
         <!-- Work 3: GRAPHIC -->
-        <a href="work-graphic.html" class="work-card metallic-border tilt-card transition-link">
+        <a href="work-graphic.html" class="work-card geo-panel tilt-card transition-link">
           <div class="work-visual">
             <img src="images/graphic_web1.png" alt="MONOLITH TYPOGRAPHY" class="work-actual-img" onerror="this.classList.add('img-fallback')">
             <span class="work-badge">GRAPHIC / 03</span>
@@ -172,7 +201,7 @@
         </a>
 
         <!-- Work 4: OTHER -->
-        <a href="work-other.html" class="work-card large metallic-border tilt-card transition-link">
+        <a href="work-other.html" class="work-card large geo-panel tilt-card transition-link">
           <div class="work-visual">
             <img src="images/other_web1.png" alt="SPECTRAZE INTERFACE" class="work-actual-img" onerror="this.classList.add('img-fallback')">
             <span class="work-badge">OTHER / 04</span>
@@ -189,7 +218,7 @@
       </div>
     </section>
 
-    <!-- SKILLS SECTION -->
+    <!-- SKILLS SECTION (全面刷新・HUDステータス & 幾何学チップ) -->
     <section id="skills" class="content-section focusable-section">
       <div class="section-label">
         <span class="section-num">03</span>
@@ -198,40 +227,91 @@
       </div>
 
       <div class="skills-grid">
-        <div class="skill-group metallic-border">
-          <h3 class="skill-cat-title">01 / GRAPHIC & UI</h3>
-          <ul class="skill-list">
-            <li><span>Logo & Identity Design</span><span class="skill-lvl">EXP</span></li>
-            <li><span>Game UI / HUD Layout</span><span class="skill-lvl">EXP</span></li>
-            <li><span>Editorial & Typography</span><span class="skill-lvl">EXP</span></li>
-            <li><span>Vector Geometry</span><span class="skill-lvl">EXP</span></li>
+        <!-- 01: GRAPHIC (全6項目・最高レベル) -->
+        <div class="skill-group geo-panel">
+          <div class="skill-cat-head">
+            <h3 class="skill-cat-title">01 / GRAPHIC</h3>
+            <span class="skill-cat-id">CORE MATRIX</span>
+          </div>
+          <ul class="skill-list-hud">
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Logo Design</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Editorial Design</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">DTP Design</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Graphic Illustration</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Image Retouch & Composite</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">UI / HUD Design</span><span class="skill-rank">LVL: MASTER // 100%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 100%;"></div></div>
+            </li>
           </ul>
         </div>
 
-        <div class="skill-group metallic-border">
-          <h3 class="skill-cat-title">02 / 3D & MOTION</h3>
-          <ul class="skill-list">
-            <li><span>Hard-Surface Modeling</span><span class="skill-lvl">MID</span></li>
-            <li><span>Chrome / Metallic Shading</span><span class="skill-lvl">EXP</span></li>
-            <li><span>Procedural Graphics</span><span class="skill-lvl">MID</span></li>
-            <li><span>Keyframe Animation</span><span class="skill-lvl">MID</span></li>
+        <!-- 02: OTHER (動画・イラスト・Live2D・3D) -->
+        <div class="skill-group geo-panel">
+          <div class="skill-cat-head">
+            <h3 class="skill-cat-title">02 / OTHER</h3>
+            <span class="skill-cat-id">EXPANDED CAPABILITY</span>
+          </div>
+          <ul class="skill-list-hud">
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Motion Graphics & Video Editing</span><span class="skill-rank">RANK: HIGH // 88%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 88%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Illustration (Anime / Cartoon)</span><span class="skill-rank">RANK: EXP // 80%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 80%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Character Concept Design</span><span class="skill-rank">RANK: EXP // 80%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 80%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">Live2D & VTuber Design</span><span class="skill-rank">RANK: MOD // 65%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 65%;"></div></div>
+            </li>
+            <li class="skill-row">
+              <div class="skill-row-top"><span class="skill-name">3D Modeling & Shading</span><span class="skill-rank">RANK: MOD // 65%</span></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 65%;"></div></div>
+            </li>
           </ul>
         </div>
 
-        <div class="skill-group metallic-border">
-          <h3 class="skill-cat-title">03 / TOOLSET</h3>
-          <div class="tag-cloud">
-            <span class="tag">Photoshop</span>
-            <span class="tag">Illustrator</span>
-            <span class="tag">Figma</span>
-            <span class="tag">Blender</span>
-            <span class="tag">After Effects</span>
+        <!-- 03: TOOLSET (全8ツール・幾何学チップ) -->
+        <div class="skill-group geo-panel">
+          <div class="skill-cat-head">
+            <h3 class="skill-cat-title">03 / TOOLSET</h3>
+            <span class="skill-cat-id">HARDWARE & APPS</span>
+          </div>
+          <div class="tool-grid">
+            <div class="tool-chip"><span class="tool-dot"></span><span>Illustrator</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>Photoshop</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>CLIP STUDIO</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>After Effects</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>Figma</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>Blender</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>Procreate</span></div>
+            <div class="tool-chip"><span class="tool-dot"></span><span>Live2D</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SHOP SECTION -->
+    <!-- SHOP SECTION (幾何学フレーム) -->
     <section id="shop" class="content-section focusable-section">
       <div class="section-label">
         <span class="section-num">04</span>
@@ -239,9 +319,10 @@
         <span class="section-line"></span>
       </div>
 
-      <div class="shop-box metallic-border">
+      <div class="shop-box geo-panel">
+        <div class="shop-corner-grid">[ SECTOR // COMMERCE ]</div>
         <div class="shop-inner">
-          <div class="shop-meta-tag">[ OFFICIAL BOOTH STORE ]</div>
+          <div class="shop-meta-tag">OFFICIAL BOOTH STORE // ASSET ARCHIVE</div>
           <h3 class="shop-title metallic-text">CONCREATION</h3>
           <p class="shop-desc">
             オリジナルグラフィックアセット、フォント、UIマテリアル、アートブックのオンライン頒布。
@@ -255,7 +336,7 @@
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- CONTACT SECTION (幾何学ライン & HUD) -->
     <section id="contact" class="content-section contact-section focusable-section">
       <div class="section-label">
         <span class="section-num">05</span>
@@ -263,13 +344,14 @@
         <span class="section-line"></span>
       </div>
 
-      <div class="contact-box metallic-border">
+      <div class="contact-box geo-panel">
+        <div class="shop-corner-grid">[ COMM-LINK // OPEN ]</div>
         <div class="contact-inner">
-          <span class="contact-sub">SOCIAL / COMMISSION / INQUIRY</span>
+          <span class="contact-sub">SOCIAL / COMMISSION / COLLABORATION</span>
           <h3 class="contact-huge metallic-text">LET'S BUILD THE MONOLITH.</h3>
           
           <div class="contact-sns-group">
-            <a href="https://x.com/DizzyMizery" target="_blank" rel="noopener noreferrer" class="sns-btn x-btn">
+            <a href="https://x.com/DizzyMizary" target="_blank" rel="noopener noreferrer" class="sns-btn x-btn">
               <span class="sns-icon">𝕏</span>
               <span class="sns-label">X / TWITTER</span>
               <span class="sns-arrow">↗</span>
