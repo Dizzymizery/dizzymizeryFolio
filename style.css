@@ -10,13 +10,13 @@
 :root {
   --bg-deep: #080808;
   --bg-surface: #101010;
-  --bg-card: #141414;
-  --border-dim: #262626;
-  --border-mid: #404040;
-  --border-bright: #888888;
+  --bg-card: rgba(18, 18, 18, 0.75);
+  --border-dim: rgba(255, 255, 255, 0.12);
+  --border-mid: rgba(255, 255, 255, 0.25);
+  --border-bright: rgba(255, 255, 255, 0.85);
   --text-pure: #ffffff;
-  --text-muted: #8e8e8e;
-  --text-dim: #525252;
+  --text-muted: #9c9c9c;
+  --text-dim: #606060;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
 }
@@ -39,7 +39,7 @@ body {
 }
 
 /* ==========================================================================
-   BACKGROUND & CANVAS (リキッドシェーダー表示設定)
+   BACKGROUND & CANVAS
    ========================================================================== */
 #bgCanvas {
   position: fixed;
@@ -50,7 +50,7 @@ body {
   z-index: 0;
   pointer-events: none;
   opacity: 0.45;
-  filter: contrast(130%) brightness(80%);
+  filter: contrast(130%) brightness(85%);
   transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
@@ -60,7 +60,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   CUSTOM CURSOR (PCのみ表示)
+   CUSTOM CURSOR
    ========================================================================== */
 .cursor-dot, .cursor-ring {
   position: fixed;
@@ -92,7 +92,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   METALLIC / CHROME TEXT & BORDERS
+   METALLIC / CHROME TEXT & GEOMETRIC BORDERS
    ========================================================================== */
 .metallic-text {
   font-family: var(--font-display);
@@ -115,16 +115,43 @@ body.inverted-mode #bgCanvas {
   100% { background-position: 200% center; }
 }
 
-.metallic-border {
+/* 幾何学的カッティング & フロストガラス */
+.geo-panel {
   position: relative;
+  background: rgba(14, 14, 14, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-dim);
-  background: var(--bg-card);
   transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
 }
 
-.metallic-border:hover {
-  border-color: var(--border-bright);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+.geo-panel:hover {
+  border-color: var(--border-mid);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
+}
+
+/* 幾何学四隅マーカー（幾何学HUDコーナー） */
+.geo-panel::before,
+.geo-panel::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.geo-panel::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--border-bright);
+  border-left: 2px solid var(--border-bright);
+}
+
+.geo-panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--border-bright);
+  border-right: 2px solid var(--border-bright);
 }
 
 .focusable-section {
@@ -137,7 +164,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   LAYOUT & HEADER
+   LAYOUT & HEADER (★磨りガラス・透過最適化★)
    ========================================================================== */
 .container {
   max-width: 1280px;
@@ -153,20 +180,22 @@ body.inverted-mode #bgCanvas {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1.2rem 2rem;
+  padding: 1.1rem 2.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(8, 8, 8, 0.92);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  /* 磨りガラス仕様: リキッドがシームレスに透ける */
+  background: rgba(8, 8, 8, 0.45);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .logo-group-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -176,7 +205,7 @@ body.inverted-mode #bgCanvas {
 }
 
 .logo-symbol {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .nav-links {
@@ -187,22 +216,23 @@ body.inverted-mode #bgCanvas {
 .nav-item {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  transition: color 0.3s;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  transition: color 0.3s, text-shadow 0.3s;
 }
 
 .nav-item:hover {
   color: var(--text-pure);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .status-indicator {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-size: 0.7rem;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 .blink-dot {
@@ -301,7 +331,7 @@ body.inverted-mode #bgCanvas {
    COMMON SECTION FORMAT
    ========================================================================== */
 .content-section {
-  padding: 6rem 0;
+  padding: 6.5rem 0;
   position: relative;
 }
 
@@ -332,67 +362,62 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   ABOUT SECTION & DOSSIER CARD
+   ABOUT SECTION (幾何学HUDリッチ化)
    ========================================================================== */
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 3.5rem;
-  align-items: center;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 2.5rem;
+  align-items: stretch;
 }
 
 .about-hero-box {
   padding: 2.5rem 2rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  background: radial-gradient(circle at 80% 20%, #1a1a1a 0%, #0d0d0d 100%);
-  min-height: 280px;
+  min-height: 380px;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  background: radial-gradient(circle at 10% 20%, rgba(28, 28, 28, 0.7) 0%, rgba(10, 10, 10, 0.8) 100%);
 }
 
-.view-dossier-tag {
-  display: inline-block;
-  margin-top: 1.2rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--text-dim);
-  border-bottom: 1px dashed var(--border-mid);
-  transition: color 0.3s, border-color 0.3s;
-}
-
-.about-hero-box:hover .view-dossier-tag {
-  color: var(--text-pure);
-  border-color: var(--text-pure);
+.about-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .spec-label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-dim);
-  letter-spacing: 0.2em;
-}
-
-.spec-label.mt {
-  display: inline-block;
-  margin-top: 1.5rem;
+  letter-spacing: 0.22em;
+  font-family: monospace;
 }
 
 .profile-name {
   font-family: var(--font-display);
-  font-size: 2rem;
-  letter-spacing: 0.05em;
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  margin: 0.2rem 0;
 }
 
-.profile-fullname {
-  font-size: 1rem;
-  color: var(--text-muted);
+.profile-origin-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-family: monospace;
+  color: #000;
+  background: #fff;
+  padding: 0.2rem 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
 }
 
 .interactive-hologram {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   border: 1px dashed var(--border-mid);
   border-radius: 50%;
   display: flex;
@@ -405,44 +430,104 @@ body.inverted-mode #bgCanvas {
 .holo-core {
   font-size: 1.8rem;
   color: #fff;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .about-hero-box:hover .holo-core {
   transform: rotate(180deg) scale(1.2);
 }
 
-.about-text-box p {
-  color: var(--text-muted);
-  line-height: 1.8;
-  font-size: 0.95rem;
+.about-card-mid {
+  margin: 1.5rem 0;
+  border-top: 1px dashed var(--border-dim);
+  border-bottom: 1px dashed var(--border-dim);
+  padding: 1rem 0;
 }
 
-.mt-sm { margin-top: 1rem; }
+.about-tag-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.micro-chip {
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: var(--text-muted);
+  border: 1px solid var(--border-dim);
+  padding: 0.25rem 0.6rem;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.view-dossier-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-dim);
+  padding-top: 1rem;
+  transition: color 0.3s;
+}
+
+.about-hero-box:hover .view-dossier-tag {
+  color: var(--text-pure);
+}
+
+/* ABOUT右側テキストボックス */
+.about-text-box {
+  padding: 2.5rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.about-header-meta {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.25em;
+  font-family: monospace;
+  margin-bottom: 0.6rem;
+}
+
+.about-text-box p {
+  color: var(--text-muted);
+  line-height: 1.85;
+  font-size: 0.94rem;
+}
 
 .metric-list {
-  display: flex;
-  gap: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
   margin-top: 2rem;
   padding-top: 1.8rem;
   border-top: 1px solid var(--border-dim);
 }
 
+.metric-item {
+  border-left: 2px solid var(--border-mid);
+  padding-left: 0.8rem;
+}
+
 .metric-val {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .metric-key {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-dim);
   letter-spacing: 0.15em;
+  font-family: monospace;
 }
 
 /* ==========================================================================
-   WORKS SECTION & ACTUAL IMAGES
+   WORKS SECTION & IMAGES
    ========================================================================== */
 .works-grid {
   display: grid;
@@ -451,7 +536,6 @@ body.inverted-mode #bgCanvas {
 }
 
 .work-card {
-  background: var(--bg-card);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -467,8 +551,6 @@ body.inverted-mode #bgCanvas {
   grid-template-columns: 1.4fr 1fr;
   gap: 2rem;
   align-items: center;
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
   padding: 2rem;
 }
 
@@ -508,7 +590,6 @@ body.inverted-mode #bgCanvas {
   background-color: #111111;
 }
 
-/* 画像ファイルが未配置時のフォールバック表示 */
 img.img-fallback {
   background: radial-gradient(circle at center, #262626 0%, #0d0d0d 100%) !important;
   position: relative;
@@ -569,100 +650,171 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   SKILLS SECTION
+   SKILLS SECTION (幾何学モジュール & HUDステータス)
    ========================================================================== */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 0.9fr;
+  gap: 1.8rem;
 }
 
 .skill-group {
-  padding: 2rem 1.5rem;
+  padding: 2.2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.skill-cat-title {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  letter-spacing: 0.1em;
+.skill-cat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid var(--border-dim);
 }
 
-.skill-list {
-  list-style: none;
-}
-
-.skill-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.7rem 0;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-}
-
-.skill-lvl {
-  font-size: 0.7rem;
-  color: var(--text-dim);
+.skill-cat-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
   letter-spacing: 0.1em;
 }
 
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.skill-cat-id {
+  font-size: 0.68rem;
+  font-family: monospace;
+  color: var(--text-dim);
 }
 
-.tag {
-  font-size: 0.8rem;
-  padding: 0.4rem 0.7rem;
-  background: #1a1a1a;
-  border: 1px solid var(--border-dim);
+.skill-list-hud {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.skill-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.skill-row-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.skill-name {
+  color: var(--text-pure);
+}
+
+.skill-rank {
+  font-size: 0.7rem;
+  font-family: monospace;
   color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.skill-bar-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* ツールセット: 幾何学モジュールチップ */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.tool-chip {
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--text-pure);
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.tool-chip:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.tool-dot {
+  width: 5px;
+  height: 5px;
+  background: #fff;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
-   SHOP SECTION
+   SHOP SECTION (幾何学フレーム & グリッド)
    ========================================================================== */
 .shop-box {
-  padding: 4.5rem 2rem;
+  padding: 5rem 2.5rem;
   text-align: center;
-  background: radial-gradient(circle at center, #191919 0%, #0d0d0d 100%);
+  position: relative;
+  background: radial-gradient(circle at center, rgba(30, 30, 30, 0.7) 0%, rgba(10, 10, 10, 0.9) 100%);
+}
+
+.shop-corner-grid {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
 }
 
 .shop-meta-tag {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
   letter-spacing: 0.25em;
   margin-bottom: 0.8rem;
+  font-family: monospace;
 }
 
 .shop-title {
-  font-size: clamp(1.8rem, 7vw, 4.5rem);
+  font-size: clamp(2rem, 7.5vw, 4.8rem);
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   word-break: break-word;
   letter-spacing: 0.02em;
 }
 
 .shop-desc {
-  max-width: 580px;
-  margin: 0 auto 2.5rem;
+  max-width: 600px;
+  margin: 0 auto 2.8rem;
   color: var(--text-muted);
-  line-height: 1.8;
+  line-height: 1.85;
   font-size: 0.95rem;
 }
 
 .shop-booth-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  background: #111;
+  gap: 0.9rem;
+  background: #000;
   border: 1px solid var(--border-bright);
   color: #fff;
-  padding: 1.1rem 2.8rem;
+  padding: 1.1rem 3rem;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 700;
@@ -676,31 +828,33 @@ img.img-fallback::after {
   background: #fff;
   color: #000;
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
 }
 
 /* ==========================================================================
-   CONTACT SECTION
+   CONTACT SECTION (幾何学ライン & HUD)
    ========================================================================== */
 .contact-section {
   padding-bottom: 5rem;
 }
 
 .contact-box {
-  padding: 4.5rem 2rem;
+  padding: 5rem 2.5rem;
   text-align: center;
-  background: radial-gradient(circle at center, #1c1c1c 0%, #0d0d0d 100%);
+  position: relative;
+  background: radial-gradient(circle at center, rgba(30, 30, 30, 0.7) 0%, rgba(10, 10, 10, 0.9) 100%);
 }
 
 .contact-sub {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
   letter-spacing: 0.25em;
   display: block;
+  font-family: monospace;
 }
 
 .contact-huge {
-  font-size: clamp(1.8rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5.5vw, 4.2rem);
   font-weight: 800;
   margin: 1.2rem 0 2.5rem 0;
 }
@@ -715,11 +869,11 @@ img.img-fallback::after {
 .sns-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  background: #111111;
+  gap: 0.9rem;
+  background: #000000;
   border: 1px solid var(--border-bright);
   color: #ffffff;
-  padding: 1.1rem 2.5rem;
+  padding: 1.1rem 2.6rem;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 700;
@@ -743,7 +897,7 @@ img.img-fallback::after {
   background: #ffffff;
   color: #000000;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
 .sns-btn:hover .sns-arrow {
@@ -762,7 +916,7 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   DETAIL & GALLERY COMMON LAYOUT (★見切れ解消・上部余白150px固定★)
+   DETAIL & GALLERY COMMON LAYOUT
    ========================================================================== */
 body.detail-page main.detail-container,
 body.detail-page main.gallery-container {
@@ -924,7 +1078,7 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   TIMELINE DETAIL PAGES (5連タイムライン)
+   TIMELINE DETAIL PAGES
    ========================================================================== */
 .work-timeline-list {
   display: flex;
@@ -1036,7 +1190,7 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   PAGE TRANSITION (SHUTTER)
+   PAGE TRANSITION
    ========================================================================== */
 .page-transition-curtain {
   position: fixed;
@@ -1097,7 +1251,7 @@ body.detail-page main.gallery-container {
 
 .nav-work-card:hover {
   transform: translateY(-4px);
-  background: #181818;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-dir {
@@ -1119,41 +1273,6 @@ body.detail-page main.gallery-container {
   font-size: 0.72rem;
   color: var(--text-muted);
   letter-spacing: 0.1em;
-}
-
-/* ==========================================================================
-   ABOUT DOSSIER SPECIFIC STYLES
-   ========================================================================== */
-.about-id-large {
-  padding: 2.5rem 2rem;
-  background: radial-gradient(circle at 10% 20%, #1c1c1c 0%, #0c0c0c 100%);
-  margin-bottom: 3.5rem;
-}
-
-.id-inner-grid {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-.id-symbol-large {
-  font-size: 4rem;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.id-spec-title {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin: 0.3rem 0 0.6rem;
-}
-
-.id-spec-desc {
-  color: var(--text-muted);
-  max-width: 600px;
-  line-height: 1.7;
-  font-size: 0.92rem;
 }
 
 /* ==========================================================================
@@ -1182,7 +1301,7 @@ body.overdrive-mode .metallic-text {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-body.overdrive-mode .metallic-border {
+body.overdrive-mode .geo-panel {
   border-color: #ffffff !important;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
 }
@@ -1216,10 +1335,10 @@ body.glitch-mode {
 body.inverted-mode {
   --bg-deep: #f2f2f4;
   --bg-surface: #e5e5e7;
-  --bg-card: #ffffff;
-  --border-dim: #d1d1d6;
-  --border-mid: #8e8e93;
-  --border-bright: #1c1c1e;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --border-dim: rgba(0, 0, 0, 0.12);
+  --border-mid: rgba(0, 0, 0, 0.25);
+  --border-bright: rgba(0, 0, 0, 0.85);
   --text-pure: #000000;
   --text-muted: #636366;
   --text-dim: #aeaeb2;
@@ -1229,7 +1348,7 @@ body.inverted-mode {
 }
 
 body.inverted-mode .site-header {
-  background: rgba(242, 242, 244, 0.9);
+  background: rgba(242, 242, 244, 0.55);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -1245,23 +1364,14 @@ body.inverted-mode .metallic-text {
   background-size: 200% auto;
 }
 
-body.inverted-mode .cursor-dot {
-  background: #000000;
-}
-
-body.inverted-mode .cursor-ring {
-  border-color: #8e8e93;
-}
-
-body.inverted-mode .click-ripple {
-  border-color: rgba(0, 0, 0, 0.4);
-}
+body.inverted-mode .cursor-dot { background: #000000; }
+body.inverted-mode .cursor-ring { border-color: #8e8e93; }
+body.inverted-mode .click-ripple { border-color: rgba(0, 0, 0, 0.4); }
 
 body.inverted-mode .about-hero-box,
-body.inverted-mode .about-id-large,
 body.inverted-mode .contact-box,
 body.inverted-mode .shop-box {
-  background: radial-gradient(circle at center, #ffffff 0%, #eaeaea 100%);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, rgba(230, 230, 230, 0.8) 100%);
 }
 
 body.inverted-mode .sns-btn,
@@ -1277,24 +1387,15 @@ body.inverted-mode .shop-booth-btn:hover {
   color: #ffffff;
 }
 
-body.inverted-mode .latest-badge {
-  background: #000000;
-  color: #ffffff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
-
-body.inverted-mode .filter-btn {
-  background: #ffffff;
+body.inverted-mode .tool-chip {
+  background: rgba(255, 255, 255, 0.6);
   border-color: var(--border-dim);
-  color: var(--text-muted);
+  color: #000;
 }
 
-body.inverted-mode .filter-btn:hover,
-body.inverted-mode .filter-btn.active {
-  background: #000000;
-  color: #ffffff;
-  border-color: #000000;
-}
+body.inverted-mode .tool-dot { background: #000; }
+body.inverted-mode .skill-bar-fill { background: #000; box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); }
+body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
 
 .status-clickable {
   cursor: pointer;
@@ -1322,9 +1423,7 @@ body.inverted-mode .filter-btn.active {
   flex-direction: column;
 }
 
-.secret-terminal.open {
-  display: flex;
-}
+.secret-terminal.open { display: flex; }
 
 .terminal-bar {
   display: flex;
@@ -1371,18 +1470,14 @@ body.inverted-mode .filter-btn.active {
   transition: background 0.2s;
 }
 
-.term-action-btn:hover {
-  background: #444;
-}
+.term-action-btn:hover { background: #444; }
 
 .terminal-blink {
   animation: blink 1s infinite;
   color: #ffffff;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
-}
+@keyframes blink { 50% { opacity: 0; } }
 
 /* ==========================================================================
    FOOTER
@@ -1408,20 +1503,18 @@ body.inverted-mode .filter-btn.active {
 }
 
 /* ==========================================================================
-   RESPONSIVE MEDIA QUERIES (スマホ・タブレット最適化)
+   RESPONSIVE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 900px) {
   .site-header { padding: 1rem 1.2rem; }
   .container { padding: 0 1.2rem; }
   .nav-links { display: none; }
 
-  /* スマホ・タブレット時の詳細・ギャラリー上部余白 */
   body.detail-page main.detail-container,
   body.detail-page main.gallery-container {
     padding-top: 110px !important;
   }
 
-  /* HEROセクションのフッター縦並び最適化 */
   .hero-foot {
     flex-direction: column;
     align-items: flex-start;
@@ -1435,9 +1528,7 @@ body.inverted-mode .filter-btn.active {
     line-height: 1.9;
   }
 
-  .scroll-prompt {
-    align-self: flex-start;
-  }
+  .scroll-prompt { align-self: flex-start; }
 
   .about-grid, 
   .skills-grid, 
@@ -1464,13 +1555,6 @@ body.inverted-mode .filter-btn.active {
     padding: 1.5rem;
   }
 
-  .about-hero-box {
-    padding: 2rem 1.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -1484,8 +1568,17 @@ body.inverted-mode .filter-btn.active {
     gap: 1.2rem;
   }
   
-  .shop-box {
-    padding: 3rem 1rem;
+  .metric-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-box, .contact-box {
+    padding: 3.5rem 1.2rem;
   }
 
   .shop-booth-btn {
