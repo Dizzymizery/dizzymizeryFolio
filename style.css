@@ -115,7 +115,6 @@ body.inverted-mode #bgCanvas {
   100% { background-position: 200% center; }
 }
 
-/* 幾何学的カッティング & フロストガラス */
 .geo-panel {
   position: relative;
   background: rgba(14, 14, 14, 0.65);
@@ -130,7 +129,6 @@ body.inverted-mode #bgCanvas {
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
 }
 
-/* 幾何学四隅マーカー（幾何学HUDコーナー） */
 .geo-panel::before,
 .geo-panel::after {
   content: "";
@@ -164,7 +162,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   LAYOUT & HEADER (★磨りガラス・透過最適化★)
+   LAYOUT & HEADER (磨りガラス仕様)
    ========================================================================== */
 .container {
   max-width: 1280px;
@@ -185,7 +183,6 @@ body.inverted-mode #bgCanvas {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  /* 磨りガラス仕様: リキッドがシームレスに透ける */
   background: rgba(8, 8, 8, 0.45);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -246,6 +243,101 @@ body.inverted-mode #bgCanvas {
 @keyframes pulse {
   0%, 100% { opacity: 0.2; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ==========================================================================
+   HUD GRID RULER SLIDER (画面右端の精密目盛り)
+   ========================================================================== */
+.hud-grid-slider {
+  position: fixed;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60vh;
+  width: 48px;
+  z-index: 90;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: monospace;
+}
+
+.ruler-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid var(--border-mid);
+}
+
+.ruler-head {
+  position: absolute;
+  top: -2.2rem;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.ruler-sec-tag {
+  color: var(--text-pure);
+  font-weight: 700;
+}
+
+.ruler-ticks {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-right: 2px;
+}
+
+.ruler-tick {
+  height: 1px;
+  background: var(--border-dim);
+  width: 6px;
+  transition: width 0.2s, background 0.2s;
+}
+
+.ruler-tick.major {
+  width: 14px;
+  background: var(--border-mid);
+}
+
+.ruler-tick.active {
+  width: 20px;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.ruler-scroller-thumb {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: 3px;
+  height: 24px;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  transition: transform 0.08s linear;
+}
+
+body.inverted-mode .hud-grid-slider .ruler-track {
+  border-right-color: var(--border-mid);
+}
+body.inverted-mode .hud-grid-slider .ruler-scroller-thumb {
+  background: #000000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+body.inverted-mode .ruler-tick.active {
+  background: #000000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 /* ==========================================================================
@@ -362,7 +454,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   ABOUT SECTION (幾何学HUDリッチ化)
+   ABOUT SECTION
    ========================================================================== */
 .about-grid {
   display: grid;
@@ -475,7 +567,6 @@ body.inverted-mode #bgCanvas {
   color: var(--text-pure);
 }
 
-/* ABOUT右側テキストボックス */
 .about-text-box {
   padding: 2.5rem 2.2rem;
   display: flex;
@@ -527,7 +618,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   WORKS SECTION & IMAGES
+   WORKS SECTION
    ========================================================================== */
 .works-grid {
   display: grid;
@@ -650,7 +741,7 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   SKILLS SECTION (幾何学モジュール & HUDステータス)
+   SKILLS SECTION
    ========================================================================== */
 .skills-grid {
   display: grid;
@@ -730,7 +821,6 @@ img.img-fallback::after {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
-/* ツールセット: 幾何学モジュールチップ */
 .tool-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -764,7 +854,7 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   SHOP SECTION (幾何学フレーム & グリッド)
+   SHOP SECTION
    ========================================================================== */
 .shop-box {
   padding: 5rem 2.5rem;
@@ -832,7 +922,7 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   CONTACT SECTION (幾何学ライン & HUD)
+   CONTACT SECTION
    ========================================================================== */
 .contact-section {
   padding-bottom: 5rem;
@@ -965,7 +1055,7 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   GALLERY PAGE (3列・Z順グリッド)
+   GALLERY PAGE
    ========================================================================== */
 .gallery-filter-bar {
   display: flex;
@@ -1276,6 +1366,41 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
+   ABOUT DOSSIER SPECIFIC STYLES
+   ========================================================================== */
+.about-id-large {
+  padding: 2.5rem 2rem;
+  background: radial-gradient(circle at 10% 20%, #1c1c1c 0%, #0c0c0c 100%);
+  margin-bottom: 3.5rem;
+}
+
+.id-inner-grid {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.id-symbol-large {
+  font-size: 4rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.id-spec-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0.3rem 0 0.6rem;
+}
+
+.id-spec-desc {
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
+/* ==========================================================================
    EASTER EGGS & TERMINAL
    ========================================================================== */
 .click-ripple {
@@ -1509,6 +1634,7 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   .site-header { padding: 1rem 1.2rem; }
   .container { padding: 0 1.2rem; }
   .nav-links { display: none; }
+  .hud-grid-slider { display: none; }
 
   body.detail-page main.detail-container,
   body.detail-page main.gallery-container {

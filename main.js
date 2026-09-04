@@ -447,4 +447,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  /* ==========================================================================
+     11. HUD GRID RULER SLIDER (目盛り生成 & スクロール精密同期)
+     ========================================================================== */
+  const rulerTicks = document.getElementById('rulerTicks');
+  const rulerThumb = document.getElementById('rulerThumb');
+  const rulerCoordY = document.getElementById('rulerCoordY');
+  const rulerSecTag = document.getElementById('rulerSecTag');
+
+  if (rulerTicks && rulerThumb) {
+    const totalTicks = 24;
+    for (let i = 0; i <= totalTicks; i++) {
+      const tick = document.createElement('div');
+      tick.className = 'ruler-tick';
+      if (i % 4 === 0) tick.classList.add('major');
+      rulerTicks.appendChild(tick);
+    }
+
+    const allTicks = rulerTicks.querySelectorAll('.ruler-tick');
+    const sections = [
+      { id: 'hero', tag: 'SEC: 00 // HERO' },
+      { id: 'about', tag: 'SEC: 01 // ABOUT' },
+      { id: 'works', tag: 'SEC: 02 // WORKS' },
+      { id: 'skills', tag: 'SEC: 03 // SKILLS' },
+      { id: 'shop', tag: 'SEC: 04 // SHOP' },
+      { id: 'contact', tag: 'SEC: 05 // CONTACT' }
+    ];
+
+    const updateRuler = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
+
+      if (rulerCoordY) {
+        rulerCoordY.textContent = `Y: ${String(Math.round(scrollY)).padStart(4, '0')}`;
+      }
+
+      const trackHeight = rulerTicks.clientHeight - 24;
+      rulerThumb.style.transform = `translateY(${progress * trackHeight}px)`;
+
+      const activeIndex = Math.round(progress * totalTicks);
+      allTicks.forEach((tick, idx) => {
+        if (idx === activeIndex) {
+          tick.classList.add('active');
+        } else {
+          tick.classList.remove('active');
+        }
+      });
+
+      let currentSection = sections[0].tag;
+      sections.forEach(sec => {
+        const el = document.getElementById(sec.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.45) {
+            currentSection = sec.tag;
+          }
+        }
+      });
+      if (rulerSecTag) {
+        rulerSecTag.textContent = currentSection;
+      }
+    };
+
+    window.addEventListener('scroll', updateRuler, { passive: true });
+    updateRuler();
+  }
+
 });

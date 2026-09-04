@@ -43,6 +43,18 @@
     </div>
   </header>
 
+  <!-- HUD GRID RULER SLIDER (画面右端の精密目盛り) -->
+  <aside class="hud-grid-slider" id="hudSlider" aria-hidden="true">
+    <div class="ruler-track">
+      <div class="ruler-head">
+        <span class="ruler-coord-y" id="rulerCoordY">Y: 0000</span>
+        <span class="ruler-sec-tag" id="rulerSecTag">SEC: 00</span>
+      </div>
+      <div class="ruler-ticks" id="rulerTicks"></div>
+      <div class="ruler-scroller-thumb" id="rulerThumb"></div>
+    </div>
+  </aside>
+
   <main class="container">
 
     <!-- HERO SECTION -->
@@ -218,7 +230,7 @@
       </div>
     </section>
 
-    <!-- SKILLS SECTION (全面刷新・HUDステータス & 幾何学チップ) -->
+    <!-- SKILLS SECTION (HUDステータス & 幾何学チップ) -->
     <section id="skills" class="content-section focusable-section">
       <div class="section-label">
         <span class="section-num">03</span>
