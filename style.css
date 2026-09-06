@@ -18,7 +18,7 @@
   --text-muted: #a0a0a0;
   --text-dim: #606060;
   --font-display: 'Syne', sans-serif;
-  --font-raw: 'Rock Salt', cursive; /* ★ 殴り書き・手書きフォント ★ */
+  --font-raw: 'Rock Salt', cursive;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
   --radius-subtle: 5px;
 }
@@ -253,60 +253,69 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   HERO SECTION (完全1画面占有・はみ出しゼロ & 殴り書き文字)
+   HERO SECTION (フルスクリーン・超巨大タイポグラフィ)
    ========================================================================== */
 .hero-section {
-  height: 100vh; /* ★ 画面の高さいっぱいに固定してABOUTの見切れを完全ブロック ★ */
-  min-height: 650px;
+  height: 100vh;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   border-bottom: 1px solid var(--border-dim);
   box-sizing: border-box;
   padding-top: 5rem;
+  padding-bottom: 2.5rem;
+  overflow: hidden;
 }
 
 .hero-scroll-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100%;
-  padding-bottom: 2rem;
+  width: 100%;
   transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;
   will-change: transform, opacity, filter;
 }
 
-.hero-meta {
+.hero-meta-strip {
   display: flex;
-  gap: 1rem;
-  font-size: 0.8rem;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
-  letter-spacing: 0.2em;
-  flex-wrap: wrap;
+  letter-spacing: 0.22em;
+  padding-top: 0.8rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
-.hero-title {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero-sub {
-  font-size: clamp(0.9rem, 2.2vw, 1.4rem);
-  font-weight: 400;
-  letter-spacing: 0.25em;
+.meta-divider {
   color: var(--text-muted);
-  margin-bottom: 0.5rem;
+  opacity: 0.4;
 }
 
-/* ★ 殴り書き・ストリート手書きスタイル ★ */
-.hero-raw-title {
+.hero-center-monolith {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.hero-raw-massive {
   font-family: var(--font-raw) !important;
-  font-size: clamp(3.2rem, 11vw, 8rem) !important;
-  line-height: 1.1;
-  letter-spacing: 0.04em;
-  transform: rotate(-2deg);
+  font-size: clamp(4.5rem, 16vw, 15rem) !important;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  transform: rotate(-3deg);
   display: inline-block;
+  user-select: none;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
   transform-origin: center center;
   transition: transform 0.1s linear, filter 0.1s linear, opacity 0.1s linear;
 }
@@ -316,6 +325,7 @@ body.inverted-mode #bgCanvas {
   justify-content: space-between;
   align-items: flex-end;
   gap: 1.5rem;
+  padding-top: 1rem;
 }
 
 .hero-desc {
@@ -617,7 +627,7 @@ body.inverted-mode #bgCanvas {
 
 /* ==========================================================================
    WORKS SECTION & MORE BUTTON
-   ========================================================================= */
+   ========================================================================== */
 .works-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -1812,6 +1822,16 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   body.detail-page main.detail-container,
   body.detail-page main.gallery-container {
     padding-top: 110px !important;
+  }
+
+  .hero-meta-strip {
+    font-size: 0.65rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-raw-massive {
+    font-size: clamp(3.8rem, 18vw, 7.5rem) !important;
   }
 
   .hero-foot {
