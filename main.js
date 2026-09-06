@@ -217,7 +217,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     3. Worksカードの3Dチルトギミック (PCのみ)
+     3. HEROロゴのスクロール奥消えアニメーション (Deep Blur Zoom Out)
+     ========================================================================== */
+  const heroDizMiz = document.getElementById('heroDizMiz');
+  const heroScrollLayer = document.getElementById('heroScrollLayer');
+
+  if (heroDizMiz && heroScrollLayer) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const windowH = window.innerHeight;
+      
+      // 最初の画面スクロール（0 〜 画面高さの60%）の間でスムーズにアニメーション
+      const progress = Math.min(Math.max(scrollY / (windowH * 0.6), 0), 1);
+
+      // 奥へ縮小（1.0 -> 0.65）、ブラー（0px -> 20px）、透明度（1.0 -> 0）
+      const scale = 1.0 - (progress * 0.35);
+      const blurVal = progress * 20;
+      const opacity = 1.0 - (progress * 1.1);
+
+      heroDizMiz.style.transform = `scale(${scale}) rotate(-2deg)`;
+      heroDizMiz.style.filter = `blur(${blurVal}px)`;
+      heroDizMiz.style.opacity = Math.max(opacity, 0);
+
+      // 周りのテキストも奥へ沈む演出
+      heroScrollLayer.style.opacity = Math.max(1.0 - (progress * 1.3), 0);
+    }, { passive: true });
+  }
+
+  /* ==========================================================================
+     4. Worksカードの3Dチルトギミック (PCのみ)
      ========================================================================== */
   if (!isTouchDevice) {
     const tiltCards = document.querySelectorAll('.tilt-card');
@@ -243,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     4. 幾何学ページトランジション & 同ページ内HUD演出
+     5. 幾何学ページトランジション & 同ページ内HUD演出
      ========================================================================== */
   const curtain = document.getElementById('pageCurtain');
   const transitionLinks = document.querySelectorAll('.transition-link, .logo-group-link');
@@ -290,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     5. GALLERY リアルタイムフィルター切り替え (3列対応)
+     6. GALLERY リアルタイムフィルター切り替え
      ========================================================================== */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const galleryBlocks = document.querySelectorAll('.gallery-block');
@@ -316,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     6. クリック / タップ波紋ショックウェーブ
+     7. クリック / タップ波紋ショックウェーブ
      ========================================================================== */
   const triggerRipple = (clientX, clientY) => {
     const ripple = document.createElement('div');
@@ -337,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     7. 隠し要素①：KONAMIコマンド（Overdrive Chrome Mode）
+     8. 隠し要素①：KONAMIコマンド
      ========================================================================== */
   const konamiSequence = [
     'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
@@ -361,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     8. 隠し要素②：SYSTEM STATUS 3連打でターミナル起動
+     9. 隠し要素②：SYSTEM STATUS 3連打でターミナル起動
      ========================================================================== */
   const statusTrigger = document.getElementById('systemStatusTrigger');
   const secretTerminal = document.getElementById('secretTerminal');
@@ -420,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     9. 隠し要素③：タイピング「DIZMIZ」で GLITCH MATRIX MODE 起動
+     10. 隠し要素③：タイピング「DIZMIZ」で GLITCH MATRIX MODE 起動
      ========================================================================== */
   const secretWord = 'dizmiz';
   let typedBuffer = '';
@@ -439,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     10. 隠し要素④：キーボード「I」で ANTI-COLOR INVERSION (ネガポジ反転)
+     11. 隠し要素④：キーボード「I」で ANTI-COLOR INVERSION
      ========================================================================== */
   window.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'i' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
@@ -448,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     11. TOOLSET CARD 3D FLIP (クリックでくるっと反転)
+     12. TOOLSET CARD 3D FLIP (クリックでくるっと反転)
      ========================================================================== */
   const flipCards = document.querySelectorAll('.tool-flip-card');
   flipCards.forEach(card => {

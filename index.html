@@ -7,7 +7,8 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <!-- 殴り書き・ストリート用フォント『Rock Salt』を追加 -->
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
@@ -44,24 +45,27 @@
 
   <main class="container">
 
+    <!-- HERO SECTION (完全1画面占有・奥へ消えるアニメーション連動) -->
     <section class="hero-section" id="hero">
-      <div class="hero-meta">
-        <span class="meta-tag">[ IDENTITY ]</span>
-        <span class="meta-text">GRAPHIC / UI / LOGO / 3D DESIGN</span>
-      </div>
+      <div class="hero-scroll-wrapper" id="heroScrollLayer">
+        <div class="hero-meta">
+          <span class="meta-tag">[ IDENTITY ]</span>
+          <span class="meta-text">GRAPHIC / UI / LOGO / 3D DESIGN</span>
+        </div>
 
-      <h1 class="hero-title">
-        <span class="hero-sub">GRAPHIC DESIGNER</span>
-        <span class="metallic-text" data-text="DizMiz">DizMiz</span>
-      </h1>
+        <h1 class="hero-title">
+          <span class="hero-sub">GRAPHIC DESIGNER</span>
+          <span class="hero-raw-title metallic-text" id="heroDizMiz">DizMiz</span>
+        </h1>
 
-      <div class="hero-foot">
-        <p class="hero-desc">
-          冷徹な構造美と、質感の衝動。幾何学的グリッドの緻密さと、境界を越境するビジュアル表現を構築する。
-        </p>
-        <div class="scroll-prompt">
-          <span class="scroll-arrow">↓</span>
-          <span>EXPLORE ARCHIVE</span>
+        <div class="hero-foot">
+          <p class="hero-desc">
+            冷徹な構造美と、質感の衝動。幾何学的グリッドの緻密さと、境界を越境するビジュアル表現を構築する。
+          </p>
+          <div class="scroll-prompt">
+            <span class="scroll-arrow">↓</span>
+            <span>SCROLL TO ENTER</span>
+          </div>
         </div>
       </div>
     </section>
