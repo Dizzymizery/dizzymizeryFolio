@@ -10,14 +10,14 @@
 :root {
   --bg-deep: #080808;
   --bg-surface: #101010;
-  /* リキッドガラス用：極限まで薄い背景と微細な白の光 */
-  --bg-card: rgba(14, 14, 14, 0.25);
-  --border-dim: rgba(255, 255, 255, 0.08);
-  --border-mid: rgba(255, 255, 255, 0.2);
-  --border-bright: rgba(255, 255, 255, 0.65);
+  /* リキッドガラス用：完全に透ける極薄設定 */
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --border-dim: rgba(255, 255, 255, 0.1);
+  --border-mid: rgba(255, 255, 255, 0.25);
+  --border-bright: rgba(255, 255, 255, 0.75);
   --text-pure: #ffffff;
   --text-muted: #a0a0a0;
-  --text-dim: #555555;
+  --text-dim: #606060;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
 }
@@ -50,8 +50,8 @@ body {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.55;
-  filter: contrast(135%) brightness(90%);
+  opacity: 0.6;
+  filter: contrast(130%) brightness(95%);
   transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
@@ -93,7 +93,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   METALLIC TEXT & LIQUID GLASS PANEL (有るようでないような質感)
+   METALLIC TEXT & LIQUID GLASS PANEL (有るようでないような透明ガラス)
    ========================================================================== */
 .metallic-text {
   font-family: var(--font-display);
@@ -116,21 +116,21 @@ body.inverted-mode #bgCanvas {
   100% { background-position: 200% center; }
 }
 
-/* ★ リキッドガラス：黒を極限まで薄め、屈折とブラーで背後を透かす ★ */
+/* ★ 有るようでないリキッドガラス：黒ベタを全廃し、微細な屈折光とブラーのみ ★ */
 .geo-panel {
   position: relative;
-  background: rgba(10, 10, 10, 0.18);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: rgba(255, 255, 255, 0.015) !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background 0.3s;
 }
 
 .geo-panel:hover {
-  background: rgba(15, 15, 15, 0.28);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 12px 40px 0 rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.04);
 }
 
 .geo-panel::before,
@@ -187,10 +187,10 @@ body.inverted-mode #bgCanvas {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(8, 8, 8, 0.3);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(8, 8, 8, 0.25);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .logo-group-link {
@@ -363,7 +363,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   ABOUT SECTION
+   ABOUT SECTION (TOP)
    ========================================================================== */
 .about-grid {
   display: grid;
@@ -456,7 +456,7 @@ body.inverted-mode #bgCanvas {
   color: var(--text-muted);
   border: 1px solid var(--border-dim);
   padding: 0.25rem 0.6rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .view-dossier-tag {
@@ -614,7 +614,7 @@ img.img-fallback::after {
   position: absolute;
   top: 0.8rem;
   left: 0.8rem;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-bright);
   font-size: 0.65rem;
@@ -669,9 +669,9 @@ img.img-fallback::after {
   letter-spacing: 0.22em;
   color: var(--text-pure);
   text-decoration: none;
-  background: rgba(10, 10, 10, 0.3);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--border-bright);
+  border: 1px solid var(--border-mid);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
@@ -785,7 +785,7 @@ img.img-fallback::after {
 
 .tool-chip {
   padding: 0.8rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-dim);
   display: flex;
@@ -857,7 +857,7 @@ img.img-fallback::after {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-bright);
   color: #fff;
@@ -916,7 +916,7 @@ img.img-fallback::after {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-bright);
   color: #ffffff;
@@ -1024,7 +1024,7 @@ body.detail-page main.gallery-container {
 }
 
 .filter-btn {
-  background: rgba(17, 17, 17, 0.4);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-dim);
   color: var(--text-muted);
@@ -1077,7 +1077,7 @@ body.detail-page main.gallery-container {
 .block-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 8, 0.8);
+  background: rgba(8, 8, 8, 0.75);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -1126,7 +1126,7 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   TIMELINE DETAIL PAGES & ABOUT DOSSIER (段差修正済み)
+   TIMELINE DETAIL PAGES & ABOUT DOSSIER (完全透過・段差解消)
    ========================================================================== */
 .work-timeline-list {
   display: flex;
@@ -1171,7 +1171,6 @@ body.detail-page main.gallery-container {
   margin-bottom: 1.5rem;
 }
 
-/* ★ 左右のカラムの高さを同期させて段差を解消 ★ */
 .detail-specs-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -1185,6 +1184,8 @@ body.detail-page main.gallery-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  /* 黒ベタを完全に剥がす */
+  background: rgba(255, 255, 255, 0.015) !important;
 }
 
 .detail-body-content {
@@ -1236,7 +1237,7 @@ body.detail-page main.gallery-container {
 
 .showcase-frame {
   position: relative;
-  background: #000;
+  background: transparent;
   padding: 0.8rem;
 }
 
@@ -1247,7 +1248,7 @@ body.detail-page main.gallery-container {
   padding: 0.8rem 0.3rem 0.2rem;
 }
 
-/* ★ DETAIL内 Google Drive リンク（外枠なし・シームレスガラスバー） ★ */
+/* ★ DETAIL内 Google Drive リンク（外枠なし・透き通るガラスバー） ★ */
 .detail-drive-link-bar {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -1262,8 +1263,8 @@ body.detail-page main.gallery-container {
   justify-content: space-between;
   align-items: center;
   padding: 1.1rem 1.6rem;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-mid);
   color: var(--text-pure);
   text-decoration: none;
@@ -1306,7 +1307,7 @@ body.detail-page main.gallery-container {
 }
 
 .drive-archive-btn:hover {
-  background: #ffffff;
+  background: #ffffff !important;
   color: #000000;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
@@ -1409,12 +1410,12 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   ABOUT DOSSIER SPECIFIC STYLES
+   ABOUT DOSSIER SPECIFIC STYLES (黒ベタ完全撤廃・透明化)
    ========================================================================== */
 .about-id-large {
   padding: 2.5rem 2rem;
-  background: rgba(15, 15, 15, 0.25);
-  backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.015) !important;
+  backdrop-filter: blur(16px);
   margin-bottom: 3.5rem;
 }
 
@@ -1540,7 +1541,7 @@ body.inverted-mode .sns-btn,
 body.inverted-mode .shop-booth-btn,
 body.inverted-mode .works-more-btn,
 body.inverted-mode .drive-archive-btn {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.5) !important;
   color: #000000;
   border-color: #000000;
 }
@@ -1549,7 +1550,7 @@ body.inverted-mode .sns-btn:hover,
 body.inverted-mode .shop-booth-btn:hover,
 body.inverted-mode .works-more-btn:hover,
 body.inverted-mode .drive-archive-btn:hover {
-  background: #000000;
+  background: #000000 !important;
   color: #ffffff;
 }
 
@@ -1654,7 +1655,7 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   font-size: 0.75rem;
   color: var(--text-dim);
   letter-spacing: 0.1em;
-  background: rgba(8, 8, 8, 0.5);
+  background: rgba(8, 8, 8, 0.3);
   backdrop-filter: blur(16px);
   position: relative;
   z-index: 2;
