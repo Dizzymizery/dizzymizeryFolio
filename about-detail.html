@@ -63,6 +63,7 @@
       </div>
     </section>
 
+    <!-- 左右の段差を完全解消したスペックグリッド -->
     <section class="detail-specs-grid">
       <!-- 左側: スペックリスト -->
       <aside class="detail-sidebar geo-panel">
@@ -74,8 +75,8 @@
         <div class="spec-row"><span class="spec-key">INTERESTS</span><span class="spec-val">Games, 90s Hiphop, Kawaii / Cute Aesthetics</span></div>
       </aside>
 
-      <!-- 右側: 本文 ＋ 空白部分に配置したDriveアーカイブボタン -->
-      <article class="detail-body-content" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <!-- 右側: 本文 ＋ 段差を作らないシームレスなDriveリンク -->
+      <article class="detail-body-content">
         <div>
           <div class="concept-block">
             <h2 class="content-heading metallic-text-sm">01. DESIGN PHILOSOPHY</h2>
@@ -93,21 +94,14 @@
           </div>
         </div>
 
-        <!-- ★ 空白を埋めるGoogle Drive全作品アーカイブボタン ★ -->
-        <div class="detail-drive-box geo-panel" style="margin-top: 3rem; padding: 1.8rem 2rem;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
-            <span class="spec-label" style="color: var(--text-pure); font-weight: 700;">[ EXTERNAL REPOSITORY // FULL ARCHIVE ]</span>
-            <span style="font-family: monospace; font-size: 0.65rem; color: var(--text-dim);">CLOUD DIRECTORY</span>
-          </div>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
-            Webサイトに掲載しきれなかったグラフィック、ラフスケッチ、各種プロジェクトの全制作物データをまとめたGoogle Driveアーカイブへアクセスします。
-          </p>
+        <!-- 余計な外枠パネルを撤廃し、自然に連なるガラスバー -->
+        <div class="detail-drive-link-bar">
           <a href="https://drive.google.com/drive/folders/12c-AigrCK1MO4eGp5o2kL3qXEwflbsGT?usp=drive_link" target="_blank" rel="noopener noreferrer" class="drive-archive-btn geo-panel">
             <span class="drive-btn-left">
               <span class="drive-icon">❖</span>
               <span class="drive-label">
-                <span class="drive-sub">GOOGLE DRIVE REPOSITORY</span>
-                <span class="drive-main">OPEN ALL WORKS DIRECTORY</span>
+                <span class="drive-sub">[ EXTERNAL CLOUD REPOSITORY ]</span>
+                <span class="drive-main">ALL WORKS ARCHIVE DIRECTORY</span>
               </span>
             </span>
             <span class="drive-arrow">↗</span>

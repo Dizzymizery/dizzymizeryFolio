@@ -10,13 +10,14 @@
 :root {
   --bg-deep: #080808;
   --bg-surface: #101010;
-  --bg-card: rgba(18, 18, 18, 0.75);
-  --border-dim: rgba(255, 255, 255, 0.12);
-  --border-mid: rgba(255, 255, 255, 0.25);
-  --border-bright: rgba(255, 255, 255, 0.85);
+  /* リキッドガラス用：極限まで薄い背景と微細な白の光 */
+  --bg-card: rgba(14, 14, 14, 0.25);
+  --border-dim: rgba(255, 255, 255, 0.08);
+  --border-mid: rgba(255, 255, 255, 0.2);
+  --border-bright: rgba(255, 255, 255, 0.65);
   --text-pure: #ffffff;
-  --text-muted: #9c9c9c;
-  --text-dim: #606060;
+  --text-muted: #a0a0a0;
+  --text-dim: #555555;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
 }
@@ -49,13 +50,13 @@ body {
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.45;
-  filter: contrast(130%) brightness(85%);
+  opacity: 0.55;
+  filter: contrast(135%) brightness(90%);
   transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
 body.inverted-mode #bgCanvas {
-  opacity: 0.55;
+  opacity: 0.65;
   filter: contrast(120%) brightness(100%);
 }
 
@@ -92,7 +93,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   METALLIC / CHROME TEXT & GEOMETRIC BORDERS
+   METALLIC TEXT & LIQUID GLASS PANEL (有るようでないような質感)
    ========================================================================== */
 .metallic-text {
   font-family: var(--font-display);
@@ -115,41 +116,44 @@ body.inverted-mode #bgCanvas {
   100% { background-position: 200% center; }
 }
 
+/* ★ リキッドガラス：黒を極限まで薄め、屈折とブラーで背後を透かす ★ */
 .geo-panel {
   position: relative;
-  background: rgba(14, 14, 14, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-dim);
-  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+  background: rgba(10, 10, 10, 0.18);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background 0.3s;
 }
 
 .geo-panel:hover {
-  border-color: var(--border-mid);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
+  background: rgba(15, 15, 15, 0.28);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 40px 0 rgba(255, 255, 255, 0.03);
 }
 
 .geo-panel::before,
 .geo-panel::after {
   content: "";
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   pointer-events: none;
 }
 
 .geo-panel::before {
   top: -1px;
   left: -1px;
-  border-top: 2px solid var(--border-bright);
-  border-left: 2px solid var(--border-bright);
+  border-top: 1.5px solid var(--border-bright);
+  border-left: 1.5px solid var(--border-bright);
 }
 
 .geo-panel::after {
   bottom: -1px;
   right: -1px;
-  border-bottom: 2px solid var(--border-bright);
-  border-right: 2px solid var(--border-bright);
+  border-bottom: 1.5px solid var(--border-bright);
+  border-right: 1.5px solid var(--border-bright);
 }
 
 .focusable-section {
@@ -183,10 +187,10 @@ body.inverted-mode #bgCanvas {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(8, 8, 8, 0.45);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(8, 8, 8, 0.3);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .logo-group-link {
@@ -377,7 +381,6 @@ body.inverted-mode #bgCanvas {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  background: radial-gradient(circle at 10% 20%, rgba(28, 28, 28, 0.7) 0%, rgba(10, 10, 10, 0.8) 100%);
 }
 
 .about-card-top {
@@ -453,7 +456,7 @@ body.inverted-mode #bgCanvas {
   color: var(--text-muted);
   border: 1px solid var(--border-dim);
   padding: 0.25rem 0.6rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .view-dossier-tag {
@@ -466,9 +469,10 @@ body.inverted-mode #bgCanvas {
   border-top: 1px solid var(--border-dim);
   padding-top: 1rem;
   transition: color 0.3s;
+  text-decoration: none;
 }
 
-.about-hero-box:hover .view-dossier-tag {
+.view-dossier-tag:hover {
   color: var(--text-pure);
 }
 
@@ -610,7 +614,8 @@ img.img-fallback::after {
   position: absolute;
   top: 0.8rem;
   left: 0.8rem;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-bright);
   font-size: 0.65rem;
   padding: 0.3rem 0.6rem;
@@ -664,7 +669,8 @@ img.img-fallback::after {
   letter-spacing: 0.22em;
   color: var(--text-pure);
   text-decoration: none;
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(10, 10, 10, 0.3);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--border-bright);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -779,7 +785,8 @@ img.img-fallback::after {
 
 .tool-chip {
   padding: 0.8rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border-dim);
   display: flex;
   align-items: center;
@@ -792,7 +799,7 @@ img.img-fallback::after {
 
 .tool-chip:hover {
   border-color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
 }
 
@@ -810,7 +817,6 @@ img.img-fallback::after {
   padding: 5rem 2.5rem;
   text-align: center;
   position: relative;
-  background: radial-gradient(circle at center, rgba(30, 30, 30, 0.7) 0%, rgba(10, 10, 10, 0.9) 100%);
 }
 
 .shop-corner-grid {
@@ -851,7 +857,8 @@ img.img-fallback::after {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
-  background: #000;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-bright);
   color: #fff;
   padding: 1.1rem 3rem;
@@ -882,7 +889,6 @@ img.img-fallback::after {
   padding: 5rem 2.5rem;
   text-align: center;
   position: relative;
-  background: radial-gradient(circle at center, rgba(30, 30, 30, 0.7) 0%, rgba(10, 10, 10, 0.9) 100%);
 }
 
 .contact-sub {
@@ -910,7 +916,8 @@ img.img-fallback::after {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
-  background: #000000;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-bright);
   color: #ffffff;
   padding: 1.1rem 2.6rem;
@@ -1017,7 +1024,8 @@ body.detail-page main.gallery-container {
 }
 
 .filter-btn {
-  background: #111111;
+  background: rgba(17, 17, 17, 0.4);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-dim);
   color: var(--text-muted);
   padding: 0.5rem 1.2rem;
@@ -1069,8 +1077,8 @@ body.detail-page main.gallery-container {
 .block-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 8, 0.85);
-  backdrop-filter: blur(4px);
+  background: rgba(8, 8, 8, 0.8);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1118,7 +1126,7 @@ body.detail-page main.gallery-container {
 }
 
 /* ==========================================================================
-   TIMELINE DETAIL PAGES
+   TIMELINE DETAIL PAGES & ABOUT DOSSIER (段差修正済み)
    ========================================================================== */
 .work-timeline-list {
   display: flex;
@@ -1163,16 +1171,26 @@ body.detail-page main.gallery-container {
   margin-bottom: 1.5rem;
 }
 
+/* ★ 左右のカラムの高さを同期させて段差を解消 ★ */
 .detail-specs-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 3rem;
+  gap: 2.5rem;
   margin-top: 2rem;
+  align-items: stretch;
 }
 
 .detail-sidebar {
-  padding: 2rem 1.5rem;
-  height: fit-content;
+  padding: 2.2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.detail-body-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .spec-section-title {
@@ -1212,7 +1230,7 @@ body.detail-page main.gallery-container {
 
 .detail-body-content p {
   color: var(--text-muted);
-  line-height: 1.8;
+  line-height: 1.85;
   font-size: 0.92rem;
 }
 
@@ -1227,6 +1245,80 @@ body.detail-page main.gallery-container {
   color: var(--text-dim);
   letter-spacing: 0.15em;
   padding: 0.8rem 0.3rem 0.2rem;
+}
+
+/* ★ DETAIL内 Google Drive リンク（外枠なし・シームレスガラスバー） ★ */
+.detail-drive-link-bar {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--border-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.drive-archive-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 1.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-mid);
+  color: var(--text-pure);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drive-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.drive-icon {
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.drive-label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.drive-sub {
+  font-size: 0.62rem;
+  font-family: monospace;
+  color: var(--text-dim);
+  letter-spacing: 0.18em;
+}
+
+.drive-main {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.drive-arrow {
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.drive-archive-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+.drive-archive-btn:hover .drive-icon,
+.drive-archive-btn:hover .drive-sub {
+  color: #000000;
+}
+
+.drive-archive-btn:hover .drive-arrow {
+  transform: translate(3px, -3px);
 }
 
 /* ==========================================================================
@@ -1267,6 +1359,7 @@ body.detail-page main.gallery-container {
    OTHER WORKS NAV
    ========================================================================== */
 .other-works-nav {
+  margin-top: 4rem;
   margin-bottom: 5rem;
 }
 
@@ -1291,7 +1384,7 @@ body.detail-page main.gallery-container {
 
 .nav-work-card:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-dir {
@@ -1320,7 +1413,8 @@ body.detail-page main.gallery-container {
    ========================================================================== */
 .about-id-large {
   padding: 2.5rem 2rem;
-  background: radial-gradient(circle at 10% 20%, #1c1c1c 0%, #0c0c0c 100%);
+  background: rgba(15, 15, 15, 0.25);
+  backdrop-filter: blur(24px);
   margin-bottom: 3.5rem;
 }
 
@@ -1409,21 +1503,21 @@ body.glitch-mode {
 body.inverted-mode {
   --bg-deep: #f2f2f4;
   --bg-surface: #e5e5e7;
-  --bg-card: rgba(255, 255, 255, 0.75);
-  --border-dim: rgba(0, 0, 0, 0.12);
-  --border-mid: rgba(0, 0, 0, 0.25);
-  --border-bright: rgba(0, 0, 0, 0.85);
+  --bg-card: rgba(255, 255, 255, 0.35);
+  --border-dim: rgba(0, 0, 0, 0.08);
+  --border-mid: rgba(0, 0, 0, 0.2);
+  --border-bright: rgba(0, 0, 0, 0.7);
   --text-pure: #000000;
-  --text-muted: #636366;
-  --text-dim: #aeaeb2;
+  --text-muted: #555555;
+  --text-dim: #999999;
   background-color: var(--bg-deep);
   color: var(--text-pure);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body.inverted-mode .site-header {
-  background: rgba(242, 242, 244, 0.55);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(242, 242, 244, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 body.inverted-mode .site-footer {
@@ -1442,29 +1536,25 @@ body.inverted-mode .cursor-dot { background: #000000; }
 body.inverted-mode .cursor-ring { border-color: #8e8e93; }
 body.inverted-mode .click-ripple { border-color: rgba(0, 0, 0, 0.4); }
 
-body.inverted-mode .about-hero-box,
-body.inverted-mode .contact-box,
-body.inverted-mode .shop-box {
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, rgba(230, 230, 230, 0.8) 100%);
-}
-
 body.inverted-mode .sns-btn,
 body.inverted-mode .shop-booth-btn,
-body.inverted-mode .works-more-btn {
-  background: #ffffff;
+body.inverted-mode .works-more-btn,
+body.inverted-mode .drive-archive-btn {
+  background: rgba(255, 255, 255, 0.5);
   color: #000000;
   border-color: #000000;
 }
 
 body.inverted-mode .sns-btn:hover,
 body.inverted-mode .shop-booth-btn:hover,
-body.inverted-mode .works-more-btn:hover {
+body.inverted-mode .works-more-btn:hover,
+body.inverted-mode .drive-archive-btn:hover {
   background: #000000;
   color: #ffffff;
 }
 
 body.inverted-mode .tool-chip {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   border-color: var(--border-dim);
   color: #000;
 }
@@ -1488,10 +1578,10 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   bottom: 1.5rem;
   right: 1.5rem;
   width: min(450px, calc(100vw - 3rem));
-  background: rgba(10, 10, 10, 0.96);
+  background: rgba(10, 10, 10, 0.85);
   border: 1px solid var(--border-bright);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
   z-index: 10001;
   font-family: monospace;
   font-size: 0.8rem;
@@ -1506,7 +1596,7 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   justify-content: space-between;
   align-items: center;
   padding: 0.6rem 1rem;
-  background: #1c1c1c;
+  background: rgba(28, 28, 28, 0.6);
   border-bottom: 1px solid var(--border-dim);
   color: var(--text-muted);
   font-size: 0.7rem;
@@ -1536,7 +1626,7 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
 }
 
 .term-action-btn {
-  background: #222;
+  background: rgba(34, 34, 34, 0.6);
   border: 1px solid var(--border-mid);
   color: #fff;
   font-size: 0.7rem;
@@ -1564,7 +1654,8 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   font-size: 0.75rem;
   color: var(--text-dim);
   letter-spacing: 0.1em;
-  background: #080808;
+  background: rgba(8, 8, 8, 0.5);
+  backdrop-filter: blur(16px);
   position: relative;
   z-index: 2;
 }
