@@ -227,19 +227,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrollY = window.scrollY || window.pageYOffset;
       const windowH = window.innerHeight;
       
-      // 最初の画面スクロール（0 〜 画面高さの60%）の間でスムーズにアニメーション
-      const progress = Math.min(Math.max(scrollY / (windowH * 0.6), 0), 1);
+      const progress = Math.min(Math.max(scrollY / (windowH * 0.55), 0), 1);
 
-      // 奥へ縮小（1.0 -> 0.65）、ブラー（0px -> 20px）、透明度（1.0 -> 0）
-      const scale = 1.0 - (progress * 0.35);
-      const blurVal = progress * 20;
-      const opacity = 1.0 - (progress * 1.1);
+      // 奥へ縮小（1.0 -> 0.6）、ブラー（0px -> 24px）、透明度（1.0 -> 0）
+      const scale = 1.0 - (progress * 0.4);
+      const blurVal = progress * 24;
+      const opacity = 1.0 - (progress * 1.15);
 
-      heroDizMiz.style.transform = `scale(${scale}) rotate(-2deg)`;
+      heroDizMiz.style.transform = `scale(${scale})`;
       heroDizMiz.style.filter = `blur(${blurVal}px)`;
       heroDizMiz.style.opacity = Math.max(opacity, 0);
 
-      // 周りのテキストも奥へ沈む演出
       heroScrollLayer.style.opacity = Math.max(1.0 - (progress * 1.3), 0);
     }, { passive: true });
   }
