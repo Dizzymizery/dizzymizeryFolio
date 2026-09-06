@@ -19,7 +19,7 @@
   --text-dim: #606060;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
-  --radius-subtle: 5px; /* ★ 微細な角丸（丸すぎず、尖りすぎない） ★ */
+  --radius-subtle: 5px;
 }
 
 html {
@@ -93,7 +93,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   METALLIC TEXT & LIQUID GLASS PANEL (微細角丸 5px)
+   METALLIC TEXT & LIQUID GLASS PANEL
    ========================================================================== */
 .metallic-text {
   font-family: var(--font-display);
@@ -116,7 +116,6 @@ body.inverted-mode #bgCanvas {
   100% { background-position: 200% center; }
 }
 
-/* ★ パネル本体に微細な角丸（5px）を適用 ★ */
 .geo-panel {
   position: relative;
   background: rgba(255, 255, 255, 0.015) !important;
@@ -134,7 +133,6 @@ body.inverted-mode #bgCanvas {
   box-shadow: 0 8px 32px rgba(255, 255, 255, 0.04);
 }
 
-/* ★ 四隅の幾何学マーカーも角丸のカーブに沿わせる ★ */
 .geo-panel::before,
 .geo-panel::after {
   content: "";
@@ -465,6 +463,77 @@ body.inverted-mode #bgCanvas {
   border-radius: 3px;
 }
 
+.about-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.drive-archive-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.2rem;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-subtle);
+  color: var(--text-pure);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drive-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.drive-icon {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.drive-label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.drive-sub {
+  font-size: 0.58rem;
+  font-family: monospace;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+}
+
+.drive-main {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.drive-arrow {
+  font-size: 0.95rem;
+  transition: transform 0.25s ease;
+}
+
+.drive-archive-btn:hover {
+  background: #ffffff !important;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+}
+
+.drive-archive-btn:hover .drive-icon,
+.drive-archive-btn:hover .drive-sub {
+  color: #000000;
+}
+
+.drive-archive-btn:hover .drive-arrow {
+  transform: translate(2px, -2px);
+}
+
 .view-dossier-tag {
   display: flex;
   justify-content: space-between;
@@ -473,7 +542,7 @@ body.inverted-mode #bgCanvas {
   letter-spacing: 0.18em;
   color: var(--text-muted);
   border-top: 1px solid var(--border-dim);
-  padding-top: 1rem;
+  padding-top: 0.8rem;
   transition: color 0.3s;
   text-decoration: none;
 }
@@ -707,7 +776,7 @@ img.img-fallback::after {
 }
 
 /* ==========================================================================
-   SKILLS SECTION
+   SKILLS SECTION & 3D FLIP TOOLSET
    ========================================================================== */
 .skills-grid {
   display: grid;
@@ -792,28 +861,75 @@ img.img-fallback::after {
 .tool-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
+  gap: 0.85rem;
 }
 
-.tool-chip {
-  padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border-dim);
-  border-radius: 3px;
+.tool-flip-card {
+  perspective: 1000px;
+  cursor: pointer;
+  height: 52px;
+  user-select: none;
+}
+
+.tool-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.tool-flip-card.is-flipped .tool-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.tool-card-front,
+.tool-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8rem;
-  color: var(--text-pure);
-  letter-spacing: 0.05em;
-  transition: all 0.25s ease;
+  padding: 0 0.85rem;
+  border: 1px solid var(--border-dim);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 
-.tool-chip:hover {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
+.tool-card-front {
+  background: rgba(255, 255, 255, 0.02);
+  justify-content: flex-start;
+  gap: 0.65rem;
+}
+
+.tool-flip-card:hover .tool-card-front {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tool-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-pure);
+  letter-spacing: 0.05em;
+  flex-grow: 1;
+}
+
+.flip-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.tool-flip-card:hover .flip-hint {
+  color: #ffffff;
+  transform: rotate(45deg);
 }
 
 .tool-dot {
@@ -822,6 +938,42 @@ img.img-fallback::after {
   background: #fff;
   flex-shrink: 0;
   border-radius: 1px;
+}
+
+.tool-card-back {
+  background: rgba(18, 18, 18, 0.85);
+  border-color: var(--border-bright);
+  transform: rotateY(180deg);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem 0.85rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.tool-back-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+}
+
+.tool-back-rank {
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.tool-back-desc {
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -1266,7 +1418,6 @@ body.detail-page main.gallery-container {
   padding: 0.8rem 0.3rem 0.2rem;
 }
 
-/* Google Drive リンクバー（角丸 5px） */
 .detail-drive-link-bar {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -1274,71 +1425,6 @@ body.detail-page main.gallery-container {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-}
-
-.drive-archive-btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.1rem 1.6rem;
-  background: rgba(255, 255, 255, 0.02) !important;
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-mid);
-  border-radius: var(--radius-subtle);
-  color: var(--text-pure);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.drive-btn-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.drive-icon {
-  font-size: 1.1rem;
-  color: #ffffff;
-}
-
-.drive-label {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.drive-sub {
-  font-size: 0.62rem;
-  font-family: monospace;
-  color: var(--text-dim);
-  letter-spacing: 0.18em;
-}
-
-.drive-main {
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.drive-arrow {
-  font-size: 1.1rem;
-  transition: transform 0.25s ease;
-}
-
-.drive-archive-btn:hover {
-  background: #ffffff !important;
-  color: #000000;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-}
-
-.drive-archive-btn:hover .drive-icon,
-.drive-archive-btn:hover .drive-sub {
-  color: #000000;
-}
-
-.drive-archive-btn:hover .drive-arrow {
-  transform: translate(3px, -3px);
 }
 
 /* ==========================================================================
@@ -1573,10 +1659,18 @@ body.inverted-mode .drive-archive-btn:hover {
   color: #ffffff;
 }
 
-body.inverted-mode .tool-chip {
-  background: rgba(255, 255, 255, 0.4);
+body.inverted-mode .tool-card-front {
+  background: rgba(0, 0, 0, 0.03);
   border-color: var(--border-dim);
-  color: #000;
+}
+
+body.inverted-mode .tool-card-back {
+  background: rgba(240, 240, 240, 0.95);
+  border-color: #000000;
+}
+
+body.inverted-mode .tool-back-rank {
+  color: #000000;
 }
 
 body.inverted-mode .tool-dot { background: #000; }

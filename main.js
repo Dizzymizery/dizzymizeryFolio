@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderCursor();
 
-    const interactives = document.querySelectorAll('a, button, .tilt-card, .interactive-hologram, .status-clickable');
+    const interactives = document.querySelectorAll('a, button, .tilt-card, .interactive-hologram, .status-clickable, .tool-flip-card');
     interactives.forEach(el => {
       el.addEventListener('mouseenter', () => {
         if (cursorRing) {
@@ -445,6 +445,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key.toLowerCase() === 'i' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
       document.body.classList.toggle('inverted-mode');
     }
+  });
+
+  /* ==========================================================================
+     11. TOOLSET CARD 3D FLIP (クリックでくるっと反転)
+     ========================================================================== */
+  const flipCards = document.querySelectorAll('.tool-flip-card');
+  flipCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      card.classList.toggle('is-flipped');
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('is-flipped');
+      }
+    });
   });
 
 });
