@@ -18,7 +18,7 @@
   --text-muted: #a0a0a0;
   --text-dim: #606060;
   --font-display: 'Syne', sans-serif;
-  --font-raw: 'Rock Salt', cursive;
+  --font-raw: 'Covered By Your Grace', cursive; /* 細身の殴り書きフォント */
   --font-body: 'Space Grotesk', -apple-system, sans-serif;
   --radius-subtle: 5px;
 }
@@ -253,7 +253,7 @@ body.inverted-mode #bgCanvas {
 }
 
 /* ==========================================================================
-   HERO SECTION (フルスクリーン・超巨大タイポグラフィ)
+   HERO SECTION (フルスクリーン・超巨大細身タイポグラフィ・見切れ完全防止)
    ========================================================================== */
 .hero-section {
   height: 100vh;
@@ -266,7 +266,7 @@ body.inverted-mode #bgCanvas {
   box-sizing: border-box;
   padding-top: 5rem;
   padding-bottom: 2.5rem;
-  overflow: hidden;
+  overflow: visible; /* 上下の見切れを防止 */
 }
 
 .hero-scroll-wrapper {
@@ -277,6 +277,7 @@ body.inverted-mode #bgCanvas {
   width: 100%;
   transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;
   will-change: transform, opacity, filter;
+  overflow: visible;
 }
 
 .hero-meta-strip {
@@ -302,20 +303,24 @@ body.inverted-mode #bgCanvas {
   width: 100%;
   flex-grow: 1;
   text-align: center;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
+  overflow: visible;
 }
 
+/* 細身・上下見切れ完全防止の手書きタイトル */
 .hero-raw-massive {
   font-family: var(--font-raw) !important;
-  font-size: clamp(4.5rem, 16vw, 15rem) !important;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
-  transform: rotate(-3deg);
+  font-size: clamp(5.5rem, 16vw, 13rem) !important;
+  font-weight: 400;
+  line-height: 1.25; /* 上下のハネをしっかり収める安全マージン */
+  letter-spacing: 0.02em;
+  transform: rotate(-2.5deg);
   display: inline-block;
   user-select: none;
   white-space: nowrap;
   width: 100%;
   text-align: center;
+  padding: 0.8rem 0; /* バウンディングボックスの突き抜け防止 */
   transform-origin: center center;
   transition: transform 0.1s linear, filter 0.1s linear, opacity 0.1s linear;
 }
@@ -1831,7 +1836,9 @@ body.inverted-mode .profile-origin-badge { background: #000; color: #fff; }
   }
 
   .hero-raw-massive {
-    font-size: clamp(3.8rem, 18vw, 7.5rem) !important;
+    font-size: clamp(4rem, 18vw, 8rem) !important;
+    line-height: 1.2;
+    padding: 0.5rem 0;
   }
 
   .hero-foot {
