@@ -50,11 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     2. WebGL シェーダー背景 (リキッド ⇔ 透明クリスタル切替)
+     2. モノクローム・クロムリキッド WebGL シェーダー背景
      ========================================================================== */
   const canvas = document.getElementById('bgCanvas');
-  let shaderMode = 0; // 0: Liquid Metal, 1: Transparent Crystal
-
   if (canvas) {
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
     if (gl) {
@@ -71,24 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
         uniform float u_time;
         uniform vec2 u_mouse;
         uniform float u_inverted;
-        uniform int u_mode; // 0: Liquid, 1: Crystal
 
-        // --- リキッド用ノイズ関数 ---
         vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
 
         float snoise(vec2 v) {
-          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                            -0.577350269189626, 0.024390243902439);
           vec2 i  = floor(v + dot(v, C.yy) );
-          vec2 x0 = v - i + dot(i, C.xx);
+          vec2 x0 = v -   i + dot(i, C.xx);
           vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
           vec4 x12 = x0.xyxy + C.xxzz;
           x12.xy -= i1;
           i = mod289(i);
-          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+                + i.x + vec3(0.0, i1.x, 1.0 ));
           vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-          m = m*m; m = m*m;
+          m = m*m;
+          m = m*m;
           vec3 x = 2.0 * fract(p * C.www) - 1.0;
           vec3 h = abs(x) - 0.5;
           vec3 ox = floor(x + 0.5);
@@ -101,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         float fbm(vec2 p) {
-          float v = 0.0; float a = 0.5;
+          float v = 0.0;
+          float a = 0.5;
           vec2 shift = vec2(100.0);
           mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
           for (int i = 0; i < 4; ++i) {
@@ -112,103 +112,32 @@ document.addEventListener('DOMContentLoaded', () => {
           return v;
         }
 
-        // --- 透明クリスタル用：幾何学ボロノイ多面体生成 ---
-        vec2 hash2(vec2 p) {
-          return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
-        }
-
-        vec3 voronoiCrystal(vec2 x) {
-          vec2 n = floor(x);
-          vec2 f = fract(x);
-          vec2 mg, mr;
-          float md = 8.0;
-          for(int j = -1; j <= 1; j++) {
-            for(int i = -1; i <= 1; i++) {
-              vec2 g = vec2(float(i), float(j));
-              vec2 o = hash2(n + g);
-              // クリスタルの切削面が時間で多角回転する
-              o = 0.5 + 0.5 * sin(u_time * 0.6 + 6.2831 * o);
-              vec2 r = g + o - f;
-              float d = dot(r, r);
-              if(d < md) {
-                md = d;
-                mr = r;
-                mg = g;
-              }
-            }
-          }
-          md = 8.0;
-          for(int j = -2; j <= 2; j++) {
-            for(int i = -2; i <= 2; i++) {
-              vec2 g = mg + vec2(float(i), float(j));
-              vec2 o = hash2(n + g);
-              o = 0.5 + 0.5 * sin(u_time * 0.6 + 6.2831 * o);
-              vec2 r = g + o - f;
-              if(dot(mr - r, mr - r) > 0.00001) {
-                md = min(md, dot(0.5 * (mr + r), normalize(r - mr)));
-              }
-            }
-          }
-          return vec3(md, mr);
-        }
-
         void main() {
           vec2 st = gl_FragCoord.xy / u_resolution.xy;
           st.x *= u_resolution.x / u_resolution.y;
 
-          vec3 col = vec3(0.0);
+          vec2 m = u_mouse / u_resolution.xy;
+          m.x *= u_resolution.x / u_resolution.y;
+          
+          float distToMouse = length(st - m);
+          float mouseFactor = smoothstep(0.6, 0.0, distToMouse);
 
-          if (u_mode == 0) {
-            // [MODE 0: LIQUID CHROME METAL]
-            vec2 m = u_mouse / u_resolution.xy;
-            m.x *= u_resolution.x / u_resolution.y;
-            float distToMouse = length(st - m);
-            float mouseFactor = smoothstep(0.6, 0.0, distToMouse);
+          vec2 q = vec2(0.0);
+          q.x = fbm(st + 0.04 * u_time);
+          q.y = fbm(st + vec2(1.0));
 
-            vec2 q = vec2(0.0);
-            q.x = fbm(st + 0.04 * u_time);
-            q.y = fbm(st + vec2(1.0));
+          vec2 r = vec2(0.0);
+          r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time + mouseFactor * 0.4);
+          r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time - mouseFactor * 0.3);
 
-            vec2 r = vec2(0.0);
-            r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.12 * u_time + mouseFactor * 0.4);
-            r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.10 * u_time - mouseFactor * 0.3);
+          float f = fbm(st + r);
 
-            float f = fbm(st + r);
-            float chrome = smoothstep(-0.2, 0.9, f);
-            chrome = pow(chrome, 2.2);
+          float chrome = smoothstep(-0.2, 0.9, f);
+          chrome = pow(chrome, 2.2);
 
-            float edge = smoothstep(0.4, 0.45, f) - smoothstep(0.45, 0.65, f);
-            col = mix(vec3(0.03), vec3(0.95), chrome);
-            col += vec3(edge * 0.4);
-          } else {
-            // [MODE 1: TRANSPARENT GEOMETRIC CRYSTAL]
-            // クリスタルの多面体スケール
-            vec2 uv = st * 3.2;
-
-            // ゆっくりとした幾何学的な空間回転
-            float angle = u_time * 0.08;
-            mat2 rot = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
-            uv = rot * uv;
-
-            vec3 c = voronoiCrystal(uv);
-
-            // エッジ（クリスタルの鋭い切削稜線）
-            float edgeDist = c.x;
-            float facetBorder = 1.0 - smoothstep(0.0, 0.08, edgeDist);
-            float coreFacet = smoothstep(0.05, 0.4, edgeDist);
-
-            // ガラス/水晶の透過屈折（光の入射角によるガラスの透明な輝き）
-            float glassDepth = 0.04 / (edgeDist + 0.08);
-            vec3 glassRefract = vec3(glassDepth * 0.06);
-
-            // ファセット面のシャープな鏡面ハイライト
-            float specular = pow(clamp(dot(normalize(c.yz), vec2(0.707, -0.707)), 0.0, 1.0), 4.0);
-
-            // 透明な水晶ベース：ダークな深淵に透明なガラスの稜線と光が浮き上がる
-            col = vec3(0.03) + glassRefract * 0.4;
-            col += vec3(facetBorder * 0.75); // 鋭角な稜線のエッジ光
-            col += vec3(specular * 0.85);    // カッティング面の反射閃光
-          }
+          float edge = smoothstep(0.4, 0.45, f) - smoothstep(0.45, 0.65, f);
+          vec3 col = mix(vec3(0.03), vec3(0.95), chrome);
+          col += vec3(edge * 0.4);
 
           if (u_inverted > 0.5) {
             col = 1.0 - col;
@@ -244,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const timeLoc = gl.getUniformLocation(program, 'u_time');
       const mouseLoc = gl.getUniformLocation(program, 'u_mouse');
       const invertedLoc = gl.getUniformLocation(program, 'u_inverted');
-      const modeLoc = gl.getUniformLocation(program, 'u_mode');
 
       let targetMouseX = window.innerWidth / 2;
       let targetMouseY = window.innerHeight / 2;
@@ -280,24 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
         gl.uniform1f(timeLoc, currentTime);
         gl.uniform2f(mouseLoc, currentMouseX * 0.5, currentMouseY * 0.5);
         gl.uniform1f(invertedLoc, document.body.classList.contains('inverted-mode') ? 1.0 : 0.0);
-        gl.uniform1i(modeLoc, shaderMode);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         requestAnimationFrame(render);
       }
       render();
-
-      // ★ キーボード「C」キーでクリスタルモード切り替え
-      window.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === 'c' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-          shaderMode = shaderMode === 0 ? 1 : 0;
-        }
-      });
     }
   }
 
   /* ==========================================================================
-     3. HEROロゴのスクロール奥消えアニメーション
+     3. HEROロゴのスクロール奥消えアニメーション (Deep Blur Zoom Out)
      ========================================================================== */
   const heroDizMiz = document.getElementById('heroDizMiz');
   const heroScrollLayer = document.getElementById('heroScrollLayer');
@@ -492,17 +412,12 @@ document.addEventListener('DOMContentLoaded', () => {
           btnBox.className = 'terminal-actions';
           btnBox.id = 'mobileEasterBtns';
           btnBox.innerHTML = `
-            <button type="button" class="term-action-btn" id="toggleCrystalBtn">> TOGGLE CRYSTAL</button>
             <button type="button" class="term-action-btn" id="toggleInvertBtn">> TOGGLE INVERT</button>
             <button type="button" class="term-action-btn" id="toggleOverdriveBtn">> TOGGLE OVERDRIVE</button>
             <button type="button" class="term-action-btn" id="toggleGlitchBtn">> TOGGLE GLITCH</button>
           `;
           secretTerminal.querySelector('.terminal-body').appendChild(btnBox);
 
-          document.getElementById('toggleCrystalBtn').addEventListener('click', (ev) => {
-            ev.stopPropagation();
-            shaderMode = shaderMode === 0 ? 1 : 0;
-          });
           document.getElementById('toggleInvertBtn').addEventListener('click', (ev) => {
             ev.stopPropagation();
             document.body.classList.toggle('inverted-mode');
